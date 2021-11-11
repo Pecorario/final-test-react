@@ -1,8 +1,9 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Container, Session, ContentTitle, LinkTo, Title } from './styles';
 
 export const Header: React.FC = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname;
 
@@ -10,11 +11,11 @@ export const Header: React.FC = () => {
     <Container>
       <ContentTitle>
         <Title>TGL</Title>
-        {path === '/' && <LinkTo to="/home">Home</LinkTo>}
+        {path === '/new-bet' && <LinkTo to="/home">Home</LinkTo>}
       </ContentTitle>
       <Session>
         <span>Account</span>
-        <button data-js="logout">Sair</button>
+        <button onClick={() => navigate('/')}>Sair</button>
       </Session>
     </Container>
   );

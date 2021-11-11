@@ -13,7 +13,7 @@ interface CardProps {
 export const Card: React.FC<CardProps> = ({ game }) => {
   return (
     <Container color={game.color}>
-      <Numbers>{game.numbers.toString()}</Numbers>
+      <Numbers>{game.numbers.toString().replace(/,/g, ', ')}</Numbers>
       <Info>
         {game.date} - (R$ {game.price.toFixed(2)})
       </Info>

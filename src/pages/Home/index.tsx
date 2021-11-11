@@ -1,10 +1,14 @@
 import { Card } from '@components/Card';
 import { GameButton } from '@components/GameButton';
+import { LoggedComponent } from '@components/LoggedComponent';
+import { useNavigate } from 'react-router-dom';
 
 import { FilterBar, Button } from './styles';
 
 export function Home() {
-  let game = {
+  const navigate = useNavigate();
+
+  const game = {
     color: '#7F3992',
     numbers: [1, 2, 4, 5, 6, 7, 9, 15, 17, 20, 21, 22, 23, 24, 25],
     date: '30/11/2020',
@@ -12,7 +16,7 @@ export function Home() {
     name: 'Lotofácil'
   };
   return (
-    <>
+    <LoggedComponent>
       <div>
         <FilterBar>
           <h2>RECENT GAMES</h2>
@@ -30,8 +34,8 @@ export function Home() {
       </div>
 
       <div>
-        <Button>New Bet</Button>
+        <Button onClick={() => navigate('/new-bet')}>New Bet</Button>
       </div>
-    </>
+    </LoggedComponent>
   );
 }

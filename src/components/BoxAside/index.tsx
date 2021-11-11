@@ -7,22 +7,29 @@ interface BoxAsideProps {
   title: string;
   buttonInsideText: string;
   buttonOutsideText: string;
+  onInsideClick?: () => void;
+  onOutsideClick?: () => void;
 }
 
 export const BoxAside: React.FC<BoxAsideProps> = ({
   children,
   title,
   buttonInsideText,
-  buttonOutsideText
+  buttonOutsideText,
+  onInsideClick,
+  onOutsideClick
 }) => {
   return (
     <Container>
       <h3>{title}</h3>
-      <Box text={buttonInsideText}>{children}</Box>
+      <Box text={buttonInsideText} onClick={onInsideClick}>
+        {children}
+      </Box>
       <Button
         color="back"
         text={buttonOutsideText}
         marginNumber={'1.875rem 0 0 0'}
+        onClick={onOutsideClick}
       />
     </Container>
   );
