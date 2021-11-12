@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+import { HiArrowRight } from 'react-icons/hi';
 
 import { Container, Session, ContentTitle, LinkTo, Title } from './styles';
 
@@ -15,7 +16,9 @@ export const Header: React.FC = () => {
       </ContentTitle>
       <Session>
         <span>Account</span>
-        <button onClick={() => navigate('/')}>Sair</button>
+        <button onClick={() => navigate('/')}>
+          Log out <HiArrowRight />
+        </button>
       </Session>
     </Container>
   );

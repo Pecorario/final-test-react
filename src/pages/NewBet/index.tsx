@@ -1,6 +1,8 @@
 import { CardCart } from '@components/CardCart';
 import { GameButton } from '@components/GameButton';
 import { LoggedComponent } from '@components/LoggedComponent';
+import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { HiArrowRight } from 'react-icons/hi';
 
 import {
   Container,
@@ -66,7 +68,10 @@ export function NewBet() {
           </div>
 
           <div>
-            <AddButton>Add to cart</AddButton>
+            <AddButton>
+              <AiOutlineShoppingCart />
+              Add to cart
+            </AddButton>
           </div>
         </ContentButtons>
       </Container>
@@ -74,8 +79,8 @@ export function NewBet() {
       <Cart className="cart">
         <h2>CART</h2>
 
-        <Items className="cart-items">
-          <div className="bet">
+        <Items>
+          <div>
             <CardCart game={game} />
             <CardCart game={game} />
             <CardCart game={game} />
@@ -86,8 +91,10 @@ export function NewBet() {
           <strong>CART</strong> TOTAL: <span>R$ 7,00</span>
         </TotalPrice>
 
-        <SaveContent className="button-save">
-          <SaveButton>Save</SaveButton>
+        <SaveContent>
+          <SaveButton>
+            Save <HiArrowRight />
+          </SaveButton>
         </SaveContent>
       </Cart>
     </LoggedComponent>

@@ -32,4 +32,8 @@ export const Button = styled.button`
 
   display: flex;
   align-items: center;
+
+  & svg {
+    margin-left: 10px;
+  }
 `;

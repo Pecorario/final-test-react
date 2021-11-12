@@ -2,6 +2,7 @@ import { Card } from '@components/Card';
 import { GameButton } from '@components/GameButton';
 import { LoggedComponent } from '@components/LoggedComponent';
 import { useNavigate } from 'react-router-dom';
+import { HiArrowRight } from 'react-icons/hi';
 
 import { FilterBar, Button } from './styles';
 
@@ -34,7 +35,9 @@ export function Home() {
       </div>
 
       <div>
-        <Button onClick={() => navigate('/new-bet')}>New Bet</Button>
+        <Button onClick={() => navigate('/new-bet')}>
+          New Bet <HiArrowRight />
+        </Button>
       </div>
     </LoggedComponent>
   );

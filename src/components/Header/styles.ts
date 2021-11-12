@@ -59,9 +59,11 @@ export const Session = styled.div`
     margin-left: 57px;
     display: flex;
     align-items: center;
+    justify-content: center;
   }
 
-  & button span {
-    margin-left: 20px;
+  & button svg {
+    font-size: 20px;
+    margin-left: 10px;
   }
 `;

@@ -1,5 +1,5 @@
-import { Container, Numbers, Info, Name } from './styles';
-
+import { Container, Numbers, Info, Name, TrashButton } from './styles';
+import { IoTrashOutline } from 'react-icons/io5';
 interface CardProps {
   game: {
     color: string;
@@ -13,6 +13,9 @@ interface CardProps {
 export const CardCart: React.FC<CardProps> = ({ game }) => {
   return (
     <Container>
+      <TrashButton>
+        <IoTrashOutline />
+      </TrashButton>
       <Info color={game.color}>
         <Numbers>{game.numbers.toString().replace(/,/g, ', ')}</Numbers>
         <Name color={game.color}>

@@ -50,3 +50,10 @@ export const Name = styled.p<StyleCardProps>`
     color: ${props => props.color};
   }
 `;
+
+export const TrashButton = styled.button`
+  & svg {
+    font-size: 24px;
+    color: #888888;
+  }
+`;

@@ -12,7 +12,7 @@ export const Box: React.FC<BoxProps> = ({ onClick, children, text }) => {
       <Content>{children}</Content>
 
       <div>
-        <Button onClick={onClick} color="forward" text={text} submit />
+        <Button onClick={onClick} type="forward" text={text} submit />
       </div>
     </Container>
   );

@@ -13,6 +13,7 @@ export function Login() {
         title="Authentication"
         buttonInsideText="Log In"
         buttonOutsideText="Sign Up"
+        type="registration"
         onInsideClick={() => navigate('/home')}
         onOutsideClick={() => navigate('/registration')}
       >

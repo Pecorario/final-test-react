@@ -11,6 +11,7 @@ export function Registration() {
         title="Registration"
         buttonInsideText="Register"
         buttonOutsideText="Back"
+        type="back"
         onInsideClick={() => navigate('/')}
         onOutsideClick={() => navigate(-1)}
       >

@@ -9,6 +9,7 @@ interface BoxAsideProps {
   buttonOutsideText: string;
   onInsideClick?: () => void;
   onOutsideClick?: () => void;
+  type: 'back' | 'registration';
 }
 
 export const BoxAside: React.FC<BoxAsideProps> = ({
@@ -17,7 +18,8 @@ export const BoxAside: React.FC<BoxAsideProps> = ({
   buttonInsideText,
   buttonOutsideText,
   onInsideClick,
-  onOutsideClick
+  onOutsideClick,
+  type
 }) => {
   return (
     <Container>
@@ -26,7 +28,7 @@ export const BoxAside: React.FC<BoxAsideProps> = ({
         {children}
       </Box>
       <Button
-        color="back"
+        type={type}
         text={buttonOutsideText}
         marginNumber={'1.875rem 0 0 0'}
         onClick={onOutsideClick}

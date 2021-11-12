@@ -1,8 +1,9 @@
 import { Btn } from './styles';
+import { HiArrowRight, HiArrowLeft } from 'react-icons/hi';
 
 interface ButtonProps {
   onClick?: () => void;
-  color: 'back' | 'forward';
+  type: 'back' | 'forward' | 'registration';
   text: string;
   marginNumber?: string;
   submit?: boolean;
@@ -10,7 +11,7 @@ interface ButtonProps {
 
 export const Button: React.FC<ButtonProps> = ({
   onClick,
-  color,
+  type,
   text,
   marginNumber,
   submit = false
@@ -19,10 +20,12 @@ export const Button: React.FC<ButtonProps> = ({
     <Btn
       type={submit ? 'submit' : undefined}
       onClick={onClick}
-      color={color}
+      color={type}
       marginNumber={marginNumber}
     >
+      {type === 'back' && <HiArrowLeft />}
       {text}
+      {(type === 'forward' || type === 'registration') && <HiArrowRight />}
     </Btn>
   );
 };

@@ -102,16 +102,25 @@ export const AddButton = styled.button`
   font-weight: bold;
   color: #fff;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   &:hover {
     background: #fff;
     border: 1px solid #27c383;
 
     color: #27c383;
   }
+
+  & svg {
+    font-size: 26px;
+    margin-right: 28px;
+  }
 `;
 
 export const Cart = styled.div`
-  min-width: 317px;
+  width: 317px;
   height: fit-content;
   background: #fff;
 
@@ -171,4 +180,10 @@ export const SaveButton = styled.button`
 
   display: flex;
   align-items: center;
+
+  & svg {
+    color: #27c383;
+    font-size: 30px;
+    margin-left: 1rem;
+  }
 `;

@@ -11,6 +11,7 @@ export function ResetPassword() {
         title="Reset password"
         buttonInsideText="Send Link"
         buttonOutsideText="Back"
+        type="back"
         onInsideClick={() => navigate('/')}
         onOutsideClick={() => navigate(-1)}
       >
