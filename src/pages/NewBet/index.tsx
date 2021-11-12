@@ -1,8 +1,7 @@
-import { CardCart } from '@components/CardCart';
+import { Cart } from '@components/Cart';
 import { GameButton } from '@components/GameButton';
 import { LoggedComponent } from '@components/LoggedComponent';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
-import { HiArrowRight } from 'react-icons/hi';
 
 import {
   Container,
@@ -11,30 +10,17 @@ import {
   BetNumber,
   ContentButtons,
   BetButton,
-  AddButton,
-  Cart,
-  Items,
-  TotalPrice,
-  SaveButton,
-  SaveContent
+  AddButton
 } from './styles';
 
 export function NewBet() {
-  const game = {
-    color: '#7F3992',
-    numbers: [1, 2, 4, 5, 6, 7, 9, 15, 17, 20, 21, 22, 23, 24, 25],
-    date: '30/11/2020',
-    price: 2.5,
-    name: 'Lotofácil'
-  };
-
   let numbers = [];
   for (let i = 1; i <= 36; i++) {
     numbers.push(i);
   }
 
   function renderNumberButton(number: number) {
-    return <BetNumber>{number}</BetNumber>;
+    return <BetNumber key={number}>{number}</BetNumber>;
   }
 
   return (
@@ -76,27 +62,7 @@ export function NewBet() {
         </ContentButtons>
       </Container>
 
-      <Cart className="cart">
-        <h2>CART</h2>
-
-        <Items>
-          <div>
-            <CardCart game={game} />
-            <CardCart game={game} />
-            <CardCart game={game} />
-          </div>
-        </Items>
-
-        <TotalPrice>
-          <strong>CART</strong> TOTAL: <span>R$ 7,00</span>
-        </TotalPrice>
-
-        <SaveContent>
-          <SaveButton>
-            Save <HiArrowRight />
-          </SaveButton>
-        </SaveContent>
-      </Cart>
+      <Cart />
     </LoggedComponent>
   );
 }

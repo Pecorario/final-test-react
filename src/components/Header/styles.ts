@@ -43,7 +43,7 @@ export const LinkTo = styled(Link)`
 `;
 
 export const Session = styled.div`
-  margin-right: 199px;
+  margin-right: 170px;
   display: flex;
   align-items: center;
 

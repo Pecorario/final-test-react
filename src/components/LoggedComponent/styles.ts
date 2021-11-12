@@ -5,5 +5,6 @@ export const Container = styled.div`
   justify-content: space-between;
 
   height: calc(100vh - 159px);
-  padding: 70.5px 195px 50px 130px;
+  overflow-y: auto;
+  padding: 70.5px 170px 50px 130px;
 `;
