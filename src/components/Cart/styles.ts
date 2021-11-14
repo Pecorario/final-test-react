@@ -43,6 +43,7 @@ export const TotalPrice = styled.h3`
 
   & strong {
     font-style: italic;
+    font-weight: bold;
   }
 `;
 

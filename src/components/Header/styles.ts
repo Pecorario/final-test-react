@@ -43,27 +43,31 @@ export const LinkTo = styled(Link)`
 `;
 
 export const Session = styled.div`
-  margin-right: 170px;
+  margin-right: 190px;
   display: flex;
   align-items: center;
 
-  & button,
   & span {
     color: #707070;
     font-size: 20px;
     font-weight: bold;
     font-style: italic;
   }
+`;
 
-  & button {
-    margin-left: 57px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+export const Button = styled.button`
+  font-size: 20px;
+  font-weight: bold;
+  font-style: italic;
+  color: #707070;
 
-  & button svg {
+  margin-left: 57px;
+  display: flex;
+  align-items: center;
+
+  & svg {
     font-size: 20px;
     margin-left: 10px;
+    margin-bottom: 5px;
   }
 `;
