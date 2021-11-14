@@ -4,8 +4,11 @@ import { LoggedComponent } from '@components/LoggedComponent';
 import { useNavigate } from 'react-router-dom';
 import { HiArrowRight } from 'react-icons/hi';
 
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+
 import { FilterBar, Button } from './styles';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { fetchGamesData } from '@store/game-actions';
 
 interface GameProps {
   name: string;
@@ -16,14 +19,12 @@ interface GameProps {
   color: string;
   selected: boolean;
 }
-interface GamesProps {
-  minCartValue: number;
-  types: GameProps[];
-}
 
 export function Home() {
+  const dispatch = useDispatch();
+  const games = useSelector((state: RootStateOrAny) => state.game.types);
+
   const navigate = useNavigate();
-  const [games, setGames] = useState<GamesProps>();
 
   const game = {
     color: '#7F3992',
@@ -33,42 +34,9 @@ export function Home() {
     name: 'Lotofácil'
   };
 
-  const fetchGamesHandles = useCallback(async () => {
-    try {
-      const response = await fetch('./games.json');
-
-      if (!response.ok) {
-        throw new Error('Something went wrong!');
-      }
-
-      const data = await response.json();
-
-      const loadedGames: GamesProps = {
-        minCartValue: data['min-cart-value'],
-        types: []
-      };
-
-      await data.types.map((item: any) => {
-        return loadedGames.types.push({
-          name: item.type,
-          description: item.description,
-          range: item.range,
-          price: item.price,
-          maxNumber: item['max-number'],
-          color: item.color,
-          selected: false
-        });
-      });
-
-      setGames(loadedGames);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
   useEffect(() => {
-    fetchGamesHandles();
-  }, [fetchGamesHandles]);
+    dispatch(fetchGamesData());
+  }, [dispatch]);
 
   return (
     <LoggedComponent>
@@ -78,7 +46,7 @@ export function Home() {
           <p>Filters</p>
 
           <div>
-            {games?.types.map((game: GameProps) => {
+            {games.map((game: GameProps) => {
               return (
                 <GameButton
                   key={game.name}

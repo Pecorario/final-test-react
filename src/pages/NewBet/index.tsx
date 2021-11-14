@@ -2,6 +2,7 @@ import { Cart } from '@components/Cart';
 import { GameButton } from '@components/GameButton';
 import { LoggedComponent } from '@components/LoggedComponent';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { RootStateOrAny, useSelector } from 'react-redux';
 
 import {
   Container,
@@ -13,7 +14,19 @@ import {
   AddButton
 } from './styles';
 
+interface GameProps {
+  name: string;
+  description: string;
+  range: number;
+  price: number;
+  maxNumber: number;
+  color: string;
+  selected: boolean;
+}
+
 export function NewBet() {
+  const games = useSelector((state: RootStateOrAny) => state.game.types);
+
   let numbers = [];
   for (let i = 1; i <= 36; i++) {
     numbers.push(i);
@@ -32,9 +45,11 @@ export function NewBet() {
         <p>Choose a game</p>
 
         <GamesType>
-          <GameButton color="#7F3992" text="Lotofácil" />
-          <GameButton color="#01AC66" text="Mega-Sena" />
-          <GameButton color="#F79C31" text="Lotomania" />
+          {games.map((game: GameProps) => {
+            return (
+              <GameButton key={game.name} color={game.color} text={game.name} />
+            );
+          })}
         </GamesType>
 
         <p>Fill your bet</p>
