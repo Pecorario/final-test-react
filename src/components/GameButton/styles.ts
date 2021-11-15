@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 interface StyledButtonProps {
   color: string;
+  selected: boolean;
 }
 
 export const Btn = styled.button<StyledButtonProps>`
@@ -14,7 +15,8 @@ export const Btn = styled.button<StyledButtonProps>`
   font-size: 0.875rem;
   font-weight: bold;
   font-style: italic;
-  color: ${props => props.color};
+  color: ${props => (props.selected ? '#FFF' : props.color)};
+  background: ${props => (props.selected ? props.color : '')};
 
   &:hover {
     background: ${props => props.color};

@@ -1,8 +1,10 @@
 import { Cart } from '@components/Cart';
 import { GameButton } from '@components/GameButton';
 import { LoggedComponent } from '@components/LoggedComponent';
+import { gameActions } from '@store/game-slice';
+import { useEffect } from 'react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
-import { RootStateOrAny, useSelector } from 'react-redux';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 
 import {
   Container,
@@ -25,15 +27,24 @@ interface GameProps {
 }
 
 export function NewBet() {
+  const dispatch = useDispatch();
   const games = useSelector((state: RootStateOrAny) => state.game.types);
+  const gameNumbers = useSelector(
+    (state: RootStateOrAny) => state.game.gameNumbers
+  );
 
-  let numbers = [];
-  for (let i = 1; i <= 36; i++) {
+  useEffect(() => {
+    dispatch(gameActions.cleanGames());
+  }, [dispatch]);
+
+  let numbers: number[] = [];
+
+  for (let i = 1; i <= gameNumbers; i++) {
     numbers.push(i);
   }
 
-  function renderNumberButton(number: number) {
-    return <BetNumber key={number}>{number}</BetNumber>;
+  function selectGame(name: string) {
+    dispatch(gameActions.selectGame(name));
   }
 
   return (
@@ -47,19 +58,34 @@ export function NewBet() {
         <GamesType>
           {games.map((game: GameProps) => {
             return (
-              <GameButton key={game.name} color={game.color} text={game.name} />
+              <GameButton
+                key={game.name}
+                color={game.color}
+                text={game.name}
+                onClick={() => selectGame(game.name)}
+                selected={game.selected}
+              />
             );
           })}
         </GamesType>
 
-        <p>Fill your bet</p>
-        <span>
-          Mark as many numbers as you want up to a maximum of 50. Win by hitting
-          15, 16, 17, 18, 19, 20 or none of the 20 numbers drawn.
-        </span>
+        {games.map((game: GameProps) => {
+          if (game.selected) {
+            return (
+              <>
+                <p>Fill your bet</p>
+                <span>{game.description}</span>
+              </>
+            );
+          } else {
+            return undefined;
+          }
+        })}
 
         <ContentNumbers>
-          {numbers.map(number => renderNumberButton(number))}
+          {numbers.map(number => (
+            <BetNumber key={number}>{number}</BetNumber>
+          ))}
         </ContentNumbers>
 
         <ContentButtons>

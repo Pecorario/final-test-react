@@ -9,6 +9,7 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { FilterBar, Button } from './styles';
 import { useEffect } from 'react';
 import { fetchGamesData } from '@store/game-actions';
+import { gameActions } from '@store/game-slice';
 
 interface GameProps {
   name: string;
@@ -38,6 +39,14 @@ export function Home() {
     dispatch(fetchGamesData());
   }, [dispatch]);
 
+  function selectGame(name: string) {
+    dispatch(gameActions.selectGame(name));
+  }
+
+  function navigateToNewBetPage() {
+    navigate('/new-bet');
+  }
+
   return (
     <LoggedComponent>
       <div>
@@ -52,6 +61,8 @@ export function Home() {
                   key={game.name}
                   color={game.color}
                   text={game.name}
+                  onClick={() => selectGame(game.name)}
+                  selected={game.selected}
                 />
               );
             })}
@@ -63,7 +74,7 @@ export function Home() {
       </div>
 
       <div>
-        <Button onClick={() => navigate('/new-bet')}>
+        <Button onClick={navigateToNewBetPage}>
           New Bet <HiArrowRight />
         </Button>
       </div>
