@@ -36,4 +36,8 @@ export const Button = styled.button`
   & svg {
     margin-left: 10px;
   }
+
+  &:hover {
+    filter: brightness(0.8);
+  }
 `;

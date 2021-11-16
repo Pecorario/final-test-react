@@ -1,5 +1,6 @@
 // import { CardCart } from '@components/CardCart';
 import { HiArrowRight } from 'react-icons/hi';
+import { RootStateOrAny, useSelector } from 'react-redux';
 
 import {
   Container,
@@ -17,7 +18,9 @@ export const Cart: React.FC = () => {
   //   price: 2.5,
   //   name: 'Lotofácil'
   // };
-
+  const totalPrice = useSelector(
+    (state: RootStateOrAny) => state.game.totalPrice
+  );
   return (
     <Container>
       <h2>CART</h2>
@@ -28,7 +31,13 @@ export const Cart: React.FC = () => {
       </Items>
 
       <TotalPrice>
-        <strong>CART</strong> TOTAL: <span>R$ 7,00</span>
+        <strong>CART</strong> TOTAL:{' '}
+        <span>
+          {totalPrice.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+          })}
+        </span>
       </TotalPrice>
 
       <SaveContent>

@@ -9,4 +9,8 @@ export const LinkTo = styled(Link)`
   text-align: right;
   font-size: 1.06rem;
   font-style: italic;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
 `;

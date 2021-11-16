@@ -42,30 +42,6 @@ export const ContentNumbers = styled.div`
   margin-top: 27px;
 `;
 
-export const BetNumber = styled.button`
-  width: 60px;
-  height: 60px;
-  margin-bottom: 20px;
-  background: #adc0c4;
-  border-radius: 50%;
-
-  font-size: 20px;
-  font-weight: bold;
-  color: #fff;
-
-  & + button {
-    margin-left: 12px;
-  }
-
-  &:nth-child(3n) {
-    margin-right: 8px;
-  }
-
-  &:nth-child(9n + 1) {
-    margin-left: 0;
-  }
-`;
-
 export const ContentButtons = styled.div`
   display: flex;
   justify-content: space-between;

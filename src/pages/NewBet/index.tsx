@@ -1,3 +1,4 @@
+import { BetNumber } from '@components/BetNumber';
 import { Cart } from '@components/Cart';
 import { GameButton } from '@components/GameButton';
 import { LoggedComponent } from '@components/LoggedComponent';
@@ -10,7 +11,6 @@ import {
   Container,
   GamesType,
   ContentNumbers,
-  BetNumber,
   ContentButtons,
   BetButton,
   AddButton
@@ -29,17 +29,18 @@ interface GameProps {
 export function NewBet() {
   const dispatch = useDispatch();
   const games = useSelector((state: RootStateOrAny) => state.game.types);
-  const gameNumbers = useSelector(
-    (state: RootStateOrAny) => state.game.gameNumbers
+  const gameSelected = useSelector(
+    (state: RootStateOrAny) => state.game.active
   );
+  const gamesOnCart = useSelector((state: RootStateOrAny) => state.game.games);
 
   useEffect(() => {
-    dispatch(gameActions.cleanGames());
+    dispatch(gameActions.resetGameDefault());
   }, [dispatch]);
 
   let numbers: number[] = [];
 
-  for (let i = 1; i <= gameNumbers; i++) {
+  for (let i = 1; i <= gameSelected.range; i++) {
     numbers.push(i);
   }
 
@@ -47,11 +48,24 @@ export function NewBet() {
     dispatch(gameActions.selectGame(name));
   }
 
+  function clearGame() {
+    dispatch(gameActions.clearGame());
+  }
+
+  function completeGame() {
+    dispatch(gameActions.completeGame());
+  }
+
+  function addGameToCart() {
+    dispatch(gameActions.addGameToCart());
+  }
+  console.log('Array de jogos: ', gamesOnCart);
   return (
     <LoggedComponent>
       <Container>
         <h2>
-          <strong>NEW BET</strong> FOR <span>MEGA-SENA</span>
+          <strong>NEW BET</strong> FOR{' '}
+          <span>{gameSelected.name.toUpperCase()}</span>
         </h2>
         <p>Choose a game</p>
 
@@ -69,34 +83,28 @@ export function NewBet() {
           })}
         </GamesType>
 
-        {games.map((game: GameProps) => {
-          if (game.selected) {
-            return (
-              <>
-                <p>Fill your bet</p>
-                <span>{game.description}</span>
-              </>
-            );
-          } else {
-            return undefined;
-          }
-        })}
+        <p>Fill your bet</p>
+        <span>{gameSelected.description}</span>
 
         <ContentNumbers>
-          {numbers.map(number => (
-            <BetNumber key={number}>{number}</BetNumber>
+          {numbers.map((number: number) => (
+            <BetNumber
+              color={gameSelected.color}
+              key={number}
+              number={number}
+            />
           ))}
         </ContentNumbers>
 
         <ContentButtons>
           <div>
-            <BetButton>Complete game</BetButton>
-            <BetButton>Clear game</BetButton>
+            <BetButton onClick={completeGame}>Complete game</BetButton>
+            <BetButton onClick={clearGame}>Clear game</BetButton>
           </div>
 
           <div>
             <AddButton>
-              <AiOutlineShoppingCart />
+              <AiOutlineShoppingCart onClick={addGameToCart} />
               Add to cart
             </AddButton>
           </div>

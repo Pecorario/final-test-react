@@ -40,6 +40,10 @@ export const LinkTo = styled(Link)`
   font-weight: bold;
   font-style: italic;
   color: #707070;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
 `;
 
 export const Session = styled.div`
@@ -69,5 +73,9 @@ export const Button = styled.button`
     font-size: 20px;
     margin-left: 10px;
     margin-bottom: 5px;
+  }
+
+  &:hover {
+    filter: brightness(0.8);
   }
 `;

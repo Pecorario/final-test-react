@@ -74,4 +74,8 @@ export const SaveButton = styled.button`
     font-size: 30px;
     margin-left: 1rem;
   }
+
+  &:hover {
+    filter: brightness(0.8);
+  }
 `;

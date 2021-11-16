@@ -23,4 +23,8 @@ export const Btn = styled.button<StyledButtonProps>`
         : ''};
     margin-right: ${props => props.color === 'back' && '1rem'};
   }
+
+  &:hover {
+    filter: brightness(0.8);
+  }
 `;

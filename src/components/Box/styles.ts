@@ -21,6 +21,10 @@ export const Container = styled.form`
   button {
     margin-top: 2.1rem;
     margin-bottom: 2.69rem;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
   }
 `;
 
