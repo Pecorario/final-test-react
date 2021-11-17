@@ -1,7 +1,10 @@
 import { Container, Numbers, Info, Name, TrashButton } from './styles';
 import { IoTrashOutline } from 'react-icons/io5';
+import { useDispatch } from 'react-redux';
+import { gameActions } from '@store/game-slice';
 interface CardProps {
   game: {
+    id: number;
     color: string;
     numbers: number[];
     date: string;
@@ -11,9 +14,15 @@ interface CardProps {
 }
 
 export const CardCart: React.FC<CardProps> = ({ game }) => {
+  const dispatch = useDispatch();
+
+  const deleteItem = () => {
+    dispatch(gameActions.removeItemOnCart(game.id));
+  };
+
   return (
     <Container>
-      <TrashButton>
+      <TrashButton onClick={deleteItem}>
         <IoTrashOutline />
       </TrashButton>
       <Info color={game.color}>

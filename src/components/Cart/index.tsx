@@ -12,6 +12,7 @@ import {
 } from './styles';
 
 interface GamesProps {
+  id: number;
   name: string;
   price: number;
   color: string;
@@ -30,8 +31,8 @@ export const Cart: React.FC = () => {
 
       <Items>
         {games.length > 0 ? (
-          games.map((game: GamesProps, index: number) => {
-            return <CardCart key={index} game={game} />;
+          games.map((game: GamesProps) => {
+            return <CardCart key={game.id} game={game} />;
           })
         ) : (
           <EmptyCart>Empty cart! :(</EmptyCart>

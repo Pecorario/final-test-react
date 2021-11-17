@@ -11,6 +11,7 @@ interface GameProps {
 }
 
 interface GamesProps {
+  id: number;
   name: string;
   price: number;
   color: string;
@@ -24,6 +25,7 @@ interface InitialStateProps {
   active: GameProps;
   selectedNumbers: Array<number>;
   totalPrice: number;
+  counter: number;
   games: Array<GamesProps>;
 }
 
@@ -41,6 +43,7 @@ const initialState: InitialStateProps = {
   },
   selectedNumbers: [],
   totalPrice: 0,
+  counter: 0,
   games: []
 };
 
@@ -159,6 +162,7 @@ const gameSlice = createSlice({
       const year = new Date().getFullYear();
 
       const game = {
+        id: state.counter,
         name: state.active.name,
         color: state.active.color,
         price: state.active.price,
@@ -168,7 +172,18 @@ const gameSlice = createSlice({
 
       state.totalPrice = state.totalPrice + state.active.price;
       state.games.push(game);
+      state.counter++;
       state.selectedNumbers = [];
+    },
+    removeItemOnCart(state, action) {
+      const id = action.payload;
+      const existingItem = state.games.find(
+        (game: GamesProps) => game.id === id
+      );
+      if (existingItem) {
+        state.games = state.games.filter((game: GamesProps) => game.id !== id);
+        state.totalPrice = state.totalPrice - existingItem.price;
+      }
     }
   }
 });

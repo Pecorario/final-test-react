@@ -58,4 +58,8 @@ export const TrashButton = styled.button`
     font-size: 24px;
     color: #888888;
   }
+
+  &:hover {
+    filter: brightness(0.8);
+  }
 `;
