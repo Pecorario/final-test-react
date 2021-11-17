@@ -44,6 +44,7 @@ export function Home() {
   }
 
   function navigateToNewBetPage() {
+    dispatch(gameActions.resetGameDefault());
     navigate('/new-bet');
   }
 

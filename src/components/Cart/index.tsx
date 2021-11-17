@@ -1,4 +1,4 @@
-// import { CardCart } from '@components/CardCart';
+import { CardCart } from '@components/CardCart';
 import { HiArrowRight } from 'react-icons/hi';
 import { RootStateOrAny, useSelector } from 'react-redux';
 
@@ -7,27 +7,35 @@ import {
   Items,
   SaveContent,
   SaveButton,
-  TotalPrice
+  TotalPrice,
+  EmptyCart
 } from './styles';
 
+interface GamesProps {
+  name: string;
+  price: number;
+  color: string;
+  numbers: number[];
+  date: string;
+}
+
 export const Cart: React.FC = () => {
-  // const game = {
-  //   color: '#7F3992',
-  //   numbers: [1, 2, 4, 5, 6, 7, 9, 15, 17, 20, 21, 22, 23, 24, 25],
-  //   date: '30/11/2020',
-  //   price: 2.5,
-  //   name: 'Lotofácil'
-  // };
   const totalPrice = useSelector(
     (state: RootStateOrAny) => state.game.totalPrice
   );
+  const games = useSelector((state: RootStateOrAny) => state.game.games);
   return (
     <Container>
       <h2>CART</h2>
 
       <Items>
-        <span>Empty cart! :(</span>
-        {/* <CardCart game={game} /> */}
+        {games.length > 0 ? (
+          games.map((game: GamesProps, index: number) => {
+            return <CardCart key={index} game={game} />;
+          })
+        ) : (
+          <EmptyCart>Empty cart! :(</EmptyCart>
+        )}
       </Items>
 
       <TotalPrice>

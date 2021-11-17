@@ -3,7 +3,12 @@ import styled from 'styled-components';
 export const Container = styled.div`
   width: 670px;
   max-height: calc(100vh - 159px);
+  overflow-y: auto;
   margin-right: 10px;
+
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
 
   & h2 {
     font-size: 24px;

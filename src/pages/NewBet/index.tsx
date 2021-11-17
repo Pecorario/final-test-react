@@ -3,7 +3,6 @@ import { Cart } from '@components/Cart';
 import { GameButton } from '@components/GameButton';
 import { LoggedComponent } from '@components/LoggedComponent';
 import { gameActions } from '@store/game-slice';
-import { useEffect } from 'react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 
@@ -32,11 +31,6 @@ export function NewBet() {
   const gameSelected = useSelector(
     (state: RootStateOrAny) => state.game.active
   );
-  const gamesOnCart = useSelector((state: RootStateOrAny) => state.game.games);
-
-  useEffect(() => {
-    dispatch(gameActions.resetGameDefault());
-  }, [dispatch]);
 
   let numbers: number[] = [];
 
@@ -59,7 +53,6 @@ export function NewBet() {
   function addGameToCart() {
     dispatch(gameActions.addGameToCart());
   }
-  console.log('Array de jogos: ', gamesOnCart);
   return (
     <LoggedComponent>
       <Container>
@@ -103,8 +96,8 @@ export function NewBet() {
           </div>
 
           <div>
-            <AddButton>
-              <AiOutlineShoppingCart onClick={addGameToCart} />
+            <AddButton onClick={addGameToCart}>
+              <AiOutlineShoppingCart />
               Add to cart
             </AddButton>
           </div>

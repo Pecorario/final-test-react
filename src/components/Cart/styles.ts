@@ -26,12 +26,12 @@ export const Items = styled.div`
   margin-right: 19px;
   max-height: 354px;
   overflow-y: auto;
+`;
 
-  span {
-    display: inline-block;
-    color: #ff0000;
-    margin-bottom: 25px;
-  }
+export const EmptyCart = styled.span`
+  display: inline-block;
+  color: #ff0000;
+  margin-bottom: 25px;
 `;
 
 export const TotalPrice = styled.h3`

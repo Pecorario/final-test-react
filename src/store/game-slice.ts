@@ -10,23 +10,43 @@ interface GameProps {
   selected: boolean;
 }
 
+interface GamesProps {
+  name: string;
+  price: number;
+  color: string;
+  numbers: number[];
+  date: string;
+}
+
+interface InitialStateProps {
+  minCartValue: number;
+  types: Array<GameProps>;
+  active: GameProps;
+  selectedNumbers: Array<number>;
+  totalPrice: number;
+  games: Array<GamesProps>;
+}
+
+const initialState: InitialStateProps = {
+  minCartValue: 0,
+  types: [],
+  active: {
+    name: '',
+    description: '',
+    range: 0,
+    price: 0,
+    maxNumber: 0,
+    color: '',
+    selected: true
+  },
+  selectedNumbers: [],
+  totalPrice: 0,
+  games: []
+};
+
 const gameSlice = createSlice({
   name: 'game',
-  initialState: {
-    minCartValue: 0,
-    types: [],
-    active: {
-      name: '',
-      description: '',
-      range: 0,
-      price: 0,
-      maxNumber: 0,
-      color: ''
-    },
-    selectedNumbers: [0],
-    totalPrice: 0,
-    games: [{ name: '', color: '', price: 0, numbers: [0], date: '' }]
-  },
+  initialState,
   reducers: {
     addGames(state, action) {
       state.minCartValue = action.payload.minCartValue;
@@ -43,7 +63,8 @@ const gameSlice = createSlice({
             range: game.range,
             price: game.price,
             maxNumber: game.maxNumber,
-            color: game.color
+            color: game.color,
+            selected: true
           };
           return (game.selected = true);
         } else {
@@ -53,15 +74,16 @@ const gameSlice = createSlice({
     },
     resetGameDefault(state) {
       state.selectedNumbers = [];
-      state.types.map((game: GameProps) => {
-        if (game.name === 'Lotofácil') {
+      state.types.map((game: GameProps, index: number) => {
+        if (index === 0) {
           state.active = {
             name: game.name,
             description: game.description,
             range: game.range,
             price: game.price,
             maxNumber: game.maxNumber,
-            color: game.color
+            color: game.color,
+            selected: true
           };
           return (game.selected = true);
         } else {
@@ -72,10 +94,6 @@ const gameSlice = createSlice({
     addNumber(state, action) {
       const newNumber = +action.payload;
       let auxNumbers = [...state.selectedNumbers];
-
-      if (state.selectedNumbers.includes(0)) {
-        state.selectedNumbers = [];
-      }
 
       const isThisNumberAlreadyOnArray =
         state.selectedNumbers.includes(newNumber);
@@ -122,6 +140,20 @@ const gameSlice = createSlice({
       }
     },
     addGameToCart(state) {
+      const missingNumbers =
+        state.active.maxNumber - state.selectedNumbers.length;
+
+      const isThisGameAlreadyFullOnArray = () => {
+        return state.selectedNumbers.length === state.active.maxNumber;
+      };
+
+      if (!isThisGameAlreadyFullOnArray()) {
+        if (missingNumbers === 1) {
+          return alert(`${missingNumbers} number missing!`);
+        }
+        return alert(`${missingNumbers} numbers missing!`);
+      }
+
       const day = new Date().toLocaleString('pt-BR', { day: '2-digit' });
       const month = new Date().toLocaleString('pt-BR', { month: 'long' });
       const year = new Date().getFullYear();
@@ -136,6 +168,7 @@ const gameSlice = createSlice({
 
       state.totalPrice = state.totalPrice + state.active.price;
       state.games.push(game);
+      state.selectedNumbers = [];
     }
   }
 });

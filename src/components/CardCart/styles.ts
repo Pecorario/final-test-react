@@ -13,7 +13,7 @@ export const Container = styled.div`
 export const Info = styled.div<StyleCardProps>`
   position: relative;
   height: 86px;
-  margin-left: 35px;
+  margin-left: 25px;
 
   display: flex;
   flex-direction: column;
@@ -43,8 +43,10 @@ export const Numbers = styled.p`
 export const Name = styled.p<StyleCardProps>`
   font-size: 16px;
   color: #868686;
+  margin-bottom: 0;
 
   span {
+    margin-bottom: 0;
     font-weight: bold;
     font-style: italic;
     color: ${props => props.color};
