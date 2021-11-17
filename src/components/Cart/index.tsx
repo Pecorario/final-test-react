@@ -1,6 +1,7 @@
 import { CardCart } from '@components/CardCart';
+import { gameActions } from '@store/game-slice';
 import { HiArrowRight } from 'react-icons/hi';
-import { RootStateOrAny, useSelector } from 'react-redux';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 
 import {
   Container,
@@ -21,10 +22,15 @@ interface GamesProps {
 }
 
 export const Cart: React.FC = () => {
+  const dispatch = useDispatch();
   const totalPrice = useSelector(
     (state: RootStateOrAny) => state.game.totalPrice
   );
   const games = useSelector((state: RootStateOrAny) => state.game.games);
+
+  function saveGame() {
+    dispatch(gameActions.saveGame());
+  }
   return (
     <Container>
       <h2>CART</h2>
@@ -50,7 +56,7 @@ export const Cart: React.FC = () => {
       </TotalPrice>
 
       <SaveContent>
-        <SaveButton>
+        <SaveButton onClick={saveGame}>
           Save <HiArrowRight />
         </SaveButton>
       </SaveContent>
