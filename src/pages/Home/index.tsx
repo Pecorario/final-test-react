@@ -7,11 +7,11 @@ import { HiArrowRight } from 'react-icons/hi';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 
 import { FilterBar, Button } from './styles';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchGamesData } from '@store/game-actions';
 import { gameActions } from '@store/game-slice';
 
-interface GameProps {
+interface TypesProps {
   name: string;
   description: string;
   range: number;
@@ -21,26 +21,42 @@ interface GameProps {
   selected: boolean;
 }
 
+interface GamesProps {
+  id: number;
+  name: string;
+  price: number;
+  color: string;
+  numbers: number[];
+  date: string;
+}
+
 export function Home() {
   const dispatch = useDispatch();
-  const games = useSelector((state: RootStateOrAny) => state.game.types);
+  const types = useSelector((state: RootStateOrAny) => state.game.types);
+  const savedGames = useSelector(
+    (state: RootStateOrAny) => state.game.savedGames
+  );
 
+  const [filteredGames, setFilteredGames] = useState(savedGames);
   const navigate = useNavigate();
-
-  const game = {
-    color: '#7F3992',
-    numbers: [1, 2, 4, 5, 6, 7, 9, 15, 17, 20, 21, 22, 23, 24, 25],
-    date: '30/11/2020',
-    price: 2.5,
-    name: 'Lotofácil'
-  };
 
   useEffect(() => {
     dispatch(fetchGamesData());
   }, [dispatch]);
 
-  function selectGame(name: string) {
-    dispatch(gameActions.selectGame(name));
+  function filterGames(name: string, selected: boolean) {
+    if (selected) {
+      dispatch(gameActions.resetTypes());
+      setFilteredGames(savedGames);
+    } else {
+      dispatch(gameActions.selectGame(name));
+
+      const filteredByName = savedGames.filter((game: GamesProps) => {
+        return game.name === name;
+      });
+
+      setFilteredGames(filteredByName);
+    }
   }
 
   function navigateToNewBetPage() {
@@ -49,20 +65,20 @@ export function Home() {
   }
 
   return (
-    <LoggedComponent>
+    <LoggedComponent overflow>
       <div>
         <FilterBar>
           <h2>RECENT GAMES</h2>
           <p>Filters</p>
 
           <div>
-            {games.map((game: GameProps) => {
+            {types.map((game: TypesProps) => {
               return (
                 <GameButton
                   key={game.name}
                   color={game.color}
                   text={game.name}
-                  onClick={() => selectGame(game.name)}
+                  onClick={() => filterGames(game.name, game.selected)}
                   selected={game.selected}
                 />
               );
@@ -70,8 +86,9 @@ export function Home() {
           </div>
         </FilterBar>
 
-        <Card game={game} />
-        <Card game={game} />
+        {filteredGames.map((game: GamesProps) => {
+          return <Card game={game} />;
+        })}
       </div>
 
       <div>

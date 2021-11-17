@@ -96,6 +96,12 @@ const gameSlice = createSlice({
         }
       });
     },
+    resetTypes(state) {
+      state.types.map((game: GameProps) => {
+        return (game.selected = false);
+      });
+      state.active.selected = false;
+    },
     addNumber(state, action) {
       const newNumber = +action.payload;
       let auxNumbers = [...state.selectedNumbers];
@@ -160,8 +166,10 @@ const gameSlice = createSlice({
       }
 
       const day = new Date().toLocaleString('pt-BR', { day: '2-digit' });
-      const month = new Date().toLocaleString('pt-BR', { month: 'long' });
+      const month = new Date().toLocaleString('pt-BR', { month: '2-digit' });
       const year = new Date().getFullYear();
+
+      state.selectedNumbers.sort((a, b) => a - b);
 
       const game = {
         id: state.counter,
