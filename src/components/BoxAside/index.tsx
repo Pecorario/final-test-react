@@ -7,7 +7,7 @@ interface BoxAsideProps {
   title: string;
   buttonInsideText: string;
   buttonOutsideText: string;
-  onInsideClick?: () => void;
+  onInsideClick?: (event: React.FormEvent) => void;
   onOutsideClick?: () => void;
   type: 'back' | 'registration';
 }

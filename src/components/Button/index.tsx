@@ -2,7 +2,7 @@ import { Btn } from './styles';
 import { HiArrowRight, HiArrowLeft } from 'react-icons/hi';
 
 interface ButtonProps {
-  onClick?: () => void;
+  onClick?: (event: React.FormEvent) => void | undefined;
   type: 'back' | 'forward' | 'registration';
   text: string;
   marginNumber?: string;

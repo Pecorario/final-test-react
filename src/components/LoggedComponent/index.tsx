@@ -12,7 +12,7 @@ export const LoggedComponent: React.FC<LoggedProps> = ({
   return (
     <>
       <Header />
-      <Container overflow>{children}</Container>
+      <Container overflow={overflow}>{children}</Container>
     </>
   );
 };

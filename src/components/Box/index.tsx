@@ -2,7 +2,7 @@ import { Button } from '@components/Button';
 import { Container, Content } from './styles';
 
 interface BoxProps {
-  onClick?: () => void;
+  onClick?: (event: React.FormEvent) => void;
   text: string;
 }
 
