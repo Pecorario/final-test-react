@@ -10,6 +10,8 @@ import { FilterBar, Button } from './styles';
 import { useEffect, useState } from 'react';
 import { fetchGamesData } from '@store/game-actions';
 import { gameActions } from '@store/game-slice';
+import { NotFoundPage } from '@components/NotFoundPage';
+import { Footer } from '@components/Footer';
 
 interface TypesProps {
   name: string;
@@ -35,6 +37,9 @@ export function Home() {
   const types = useSelector((state: RootStateOrAny) => state.game.types);
   const savedGames = useSelector(
     (state: RootStateOrAny) => state.game.savedGames
+  );
+  const userLogged = useSelector(
+    (state: RootStateOrAny) => state.auth.userLogged
   );
 
   const [filteredGames, setFilteredGames] = useState(savedGames);
@@ -65,37 +70,46 @@ export function Home() {
   }
 
   return (
-    <LoggedComponent overflow>
-      <div>
-        <FilterBar>
-          <h2>RECENT GAMES</h2>
-          <p>Filters</p>
+    <>
+      {userLogged.isLoggedIn ? (
+        <>
+          <LoggedComponent overflow>
+            <div>
+              <FilterBar>
+                <h2>RECENT GAMES</h2>
+                <p>Filters</p>
 
-          <div>
-            {types.map((game: TypesProps) => {
-              return (
-                <GameButton
-                  key={game.name}
-                  color={game.color}
-                  text={game.name}
-                  onClick={() => filterGames(game.name, game.selected)}
-                  selected={game.selected}
-                />
-              );
-            })}
-          </div>
-        </FilterBar>
+                <div>
+                  {types.map((game: TypesProps) => {
+                    return (
+                      <GameButton
+                        key={game.name}
+                        color={game.color}
+                        text={game.name}
+                        onClick={() => filterGames(game.name, game.selected)}
+                        selected={game.selected}
+                      />
+                    );
+                  })}
+                </div>
+              </FilterBar>
 
-        {filteredGames.map((game: GamesProps) => {
-          return <Card game={game} />;
-        })}
-      </div>
+              {filteredGames.map((game: GamesProps) => {
+                return <Card game={game} />;
+              })}
+            </div>
 
-      <div>
-        <Button onClick={navigateToNewBetPage}>
-          New Bet <HiArrowRight />
-        </Button>
-      </div>
-    </LoggedComponent>
+            <div>
+              <Button onClick={navigateToNewBetPage}>
+                New Bet <HiArrowRight />
+              </Button>
+            </div>
+          </LoggedComponent>
+          <Footer />
+        </>
+      ) : (
+        <NotFoundPage />
+      )}
+    </>
   );
 }

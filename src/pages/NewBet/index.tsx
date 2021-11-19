@@ -1,7 +1,9 @@
 import { BetNumber } from '@components/BetNumber';
 import { Cart } from '@components/Cart';
+import { Footer } from '@components/Footer';
 import { GameButton } from '@components/GameButton';
 import { LoggedComponent } from '@components/LoggedComponent';
+import { NotFoundPage } from '@components/NotFoundPage';
 import { gameActions } from '@store/game-slice';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
@@ -31,6 +33,9 @@ export function NewBet() {
   const gameSelected = useSelector(
     (state: RootStateOrAny) => state.game.active
   );
+  const userLogged = useSelector(
+    (state: RootStateOrAny) => state.auth.userLogged
+  );
 
   let numbers: number[] = [];
 
@@ -54,57 +59,66 @@ export function NewBet() {
     dispatch(gameActions.addGameToCart());
   }
   return (
-    <LoggedComponent>
-      <Container>
-        <h2>
-          <strong>NEW BET</strong> FOR{' '}
-          <span>{gameSelected.name.toUpperCase()}</span>
-        </h2>
-        <p>Choose a game</p>
+    <>
+      {userLogged.isLoggedIn ? (
+        <>
+          <LoggedComponent>
+            <Container>
+              <h2>
+                <strong>NEW BET</strong> FOR{' '}
+                <span>{gameSelected.name.toUpperCase()}</span>
+              </h2>
+              <p>Choose a game</p>
 
-        <GamesType>
-          {games.map((game: GameProps) => {
-            return (
-              <GameButton
-                key={game.name}
-                color={game.color}
-                text={game.name}
-                onClick={() => selectGame(game.name)}
-                selected={game.selected}
-              />
-            );
-          })}
-        </GamesType>
+              <GamesType>
+                {games.map((game: GameProps) => {
+                  return (
+                    <GameButton
+                      key={game.name}
+                      color={game.color}
+                      text={game.name}
+                      onClick={() => selectGame(game.name)}
+                      selected={game.selected}
+                    />
+                  );
+                })}
+              </GamesType>
 
-        <p>Fill your bet</p>
-        <span>{gameSelected.description}</span>
+              <p>Fill your bet</p>
+              <span>{gameSelected.description}</span>
 
-        <ContentNumbers>
-          {numbers.map((number: number) => (
-            <BetNumber
-              color={gameSelected.color}
-              key={number}
-              number={number}
-            />
-          ))}
-        </ContentNumbers>
+              <ContentNumbers>
+                {numbers.map((number: number) => (
+                  <BetNumber
+                    color={gameSelected.color}
+                    key={number}
+                    number={number}
+                  />
+                ))}
+              </ContentNumbers>
 
-        <ContentButtons>
-          <div>
-            <BetButton onClick={completeGame}>Complete game</BetButton>
-            <BetButton onClick={clearGame}>Clear game</BetButton>
-          </div>
+              <ContentButtons>
+                <div>
+                  <BetButton onClick={completeGame}>Complete game</BetButton>
+                  <BetButton onClick={clearGame}>Clear game</BetButton>
+                </div>
 
-          <div>
-            <AddButton onClick={addGameToCart}>
-              <AiOutlineShoppingCart />
-              Add to cart
-            </AddButton>
-          </div>
-        </ContentButtons>
-      </Container>
+                <div>
+                  <AddButton onClick={addGameToCart}>
+                    <AiOutlineShoppingCart />
+                    Add to cart
+                  </AddButton>
+                </div>
+              </ContentButtons>
+            </Container>
 
-      <Cart />
-    </LoggedComponent>
+            <Cart />
+          </LoggedComponent>
+          <Footer />
+        </>
+      ) : (
+        <NotFoundPage />
+      )}
+    </>
   );
 }

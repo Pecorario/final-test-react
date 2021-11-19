@@ -1,12 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Login } from '@pages/Login';
-import { Footer } from '@components/Footer';
 import { ResetPassword } from '@pages/ResetPassword';
 import { Registration } from '@pages/Registration';
 import { Home } from '@pages/Home';
-
 import { GlobalStyle } from './styles/global';
 import { NewBet } from '@pages/NewBet';
+import { NotFoundPage } from '@components/NotFoundPage';
 
 function App() {
   return (
@@ -18,9 +17,9 @@ function App() {
           <Route path="/registration" element={<Registration />} />
           <Route path="/home" element={<Home />} />
           <Route path="/new-bet" element={<NewBet />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
-      <Footer />
       <GlobalStyle />
     </>
   );

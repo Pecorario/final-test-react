@@ -12,13 +12,22 @@ interface InitialStateProps {
   nameMessage: string;
   emailMessage: string;
   passwordMessage: string;
+  isMessageInitial: boolean;
+  userLogged: UserProps;
 }
 
 const initialState: InitialStateProps = {
   users: [],
   nameMessage: '',
   emailMessage: '',
-  passwordMessage: ''
+  passwordMessage: '',
+  isMessageInitial: true,
+  userLogged: {
+    name: '',
+    email: '',
+    password: '',
+    isLoggedIn: false
+  }
 };
 
 const authSlice = createSlice({
@@ -26,90 +35,108 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     registerAccount(state, action) {
-      const nameUser = action.payload.name;
-      const emailUser = action.payload.email;
-      const passwordUser = action.payload.password;
+      const {
+        name: nameUser,
+        email: emailUser,
+        password: passwordUser
+      } = action.payload;
 
-      // const nameIsValid = nameUser.trim().length > 0;
-      // const emailIsValid =
-      //   emailUser.trim().length > 0 && emailUser.includes('@');
-      // const emailExists =
-      //   state.users.find((user: UserProps) => user.email === emailUser) !==
-      //   undefined
-      //     ? true
-      //     : false;
-      // const passwordIsValid = passwordUser.trim().length > 7;
-
-      // if (!emailExists && nameIsValid && emailIsValid && passwordIsValid) {
       state.users.push({
         name: nameUser,
         email: emailUser,
         password: passwordUser,
         isLoggedIn: false
       });
-      //   state.nameMessage = '';
-      //   state.emailMessage = '';
-      //   state.passwordMessage = '';
-      // } else {
-      //   if (emailExists) {
-      //     state.emailMessage = 'This email is already in use.';
-      //   }
-      //   if (!emailIsValid) {
-      //     state.emailMessage = 'Invalid email.';
-      //   }
-      //   if (!passwordIsValid) {
-      //     state.passwordMessage =
-      //       'The password contains fewer than eight characters.';
-      //   }
-      //   if (!nameIsValid) {
-      //     state.nameMessage = 'Invalid name.';
-      //   }
-      //   if (!emailExists && emailIsValid) {
-      //     state.emailMessage = '';
-      //   }
-      //   if (passwordIsValid) {
-      //     state.passwordMessage = '';
-      //   }
-      //   if (nameIsValid) {
-      //     state.nameMessage = '';
-      //   }
-      // }
+    },
+    validateInput(state, action) {
+      const { type, value } = action.payload;
+      state.isMessageInitial = false;
+
+      if (type === 'email') {
+        const emailIsValid = value.trim().length > 0 && value.includes('@');
+
+        const emailExists = state.users.some(user => user.email === value);
+
+        if (emailExists) {
+          state.emailMessage = 'This email is already in use.';
+        } else if (!emailIsValid) {
+          state.emailMessage = 'Invalid email.';
+        } else if (!emailExists && emailIsValid) {
+          state.emailMessage = '';
+        }
+      } else if (type === 'password') {
+        const passwordIsValid = value.trim().length > 7;
+
+        if (!passwordIsValid) {
+          state.passwordMessage =
+            'The password contains fewer than eight characters.';
+        } else if (passwordIsValid) {
+          state.passwordMessage = '';
+        }
+      } else {
+        const nameIsValid = value.trim().length > 0;
+
+        if (!nameIsValid) {
+          state.nameMessage = 'Invalid name.';
+        } else if (nameIsValid) {
+          state.nameMessage = '';
+        }
+      }
     },
     onLogin(state, action) {
+      const { email, password } = action.payload;
+
+      if (state.users.length > 0) {
+        state.users.map((user: UserProps) => {
+          if (user.email === email) {
+            if (user.password === password) {
+              state.passwordMessage = '';
+              state.emailMessage = '';
+              state.isMessageInitial = false;
+
+              state.userLogged = {
+                name: user.name,
+                email: user.email,
+                password: user.password,
+                isLoggedIn: true
+              };
+              return (user.isLoggedIn = true);
+            } else {
+              return (state.passwordMessage = 'Incorrect password.');
+            }
+          } else {
+            return (state.emailMessage = 'Incorrect email.');
+          }
+        });
+      } else {
+        state.emailMessage = 'Incorrect email.';
+        state.passwordMessage = '';
+      }
+    },
+    onLogout(state, action) {
       const email = action.payload.email;
 
-      state.users.map((user: UserProps) => {
-        if (user.email === email) {
-          return (user.isLoggedIn = true);
-        }
-        return (user.isLoggedIn = false);
-      });
+      const userLogged = state.users.find(
+        (user: UserProps) => user.email === email
+      );
 
-      // if (state.users.length > 0) {
-      //   state.users.map((user: UserProps) => {
-      //     if (user.email === email) {
-      //       console.log('Email existe');
-      //       if (user.password === password) {
-      //         state.passwordMessage = '';
-      //         state.emailMessage = '';
-      //         return (user.isLoggedIn = true);
-      //       } else {
-      //         return (state.passwordMessage = 'Incorrect password.');
-      //       }
-      //     } else {
-      //       console.log('Email não existe');
-
-      //       return (state.emailMessage = 'Incorrect email.');
-      //     }
-      //   });
-      // } else {
-      //   state.emailMessage = 'Incorrect email.';
-      // }
+      if (userLogged) {
+        userLogged.isLoggedIn = false;
+        state.userLogged = {
+          name: '',
+          email: '',
+          password: '',
+          isLoggedIn: false
+        };
+      }
     },
     resetMessages(state) {
       state.emailMessage = '';
       state.nameMessage = '';
       state.passwordMessage = '';
+    },
+    defineInitialStateOfMessages(state) {
+      state.isMessageInitial = true;
     }
   }
 });
