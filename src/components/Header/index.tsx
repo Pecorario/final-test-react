@@ -7,26 +7,36 @@ import {
   ContentTitle,
   LinkTo,
   Title,
-  Button
+  Button,
+  Content
 } from './styles';
+import { RootStateOrAny, useSelector } from 'react-redux';
 
 export const Header: React.FC = () => {
+  const { name } = useSelector(
+    (state: RootStateOrAny) => state.auth.userLogged
+  );
+
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname;
 
+  const firstName = name.split(' ').slice(0, 1);
+
   return (
     <Container>
-      <ContentTitle>
-        <Title>TGL</Title>
-        {path === '/new-bet' && <LinkTo to="/home">Home</LinkTo>}
-      </ContentTitle>
-      <Session>
-        <span>Account</span>
-        <Button onClick={() => navigate('/')}>
-          Log out <HiArrowRight />
-        </Button>
-      </Session>
+      <Content>
+        <ContentTitle>
+          <Title>TGL</Title>
+          {path === '/new-bet' && <LinkTo to="/home">Home</LinkTo>}
+        </ContentTitle>
+        <Session>
+          <span>{firstName}</span>
+          <Button onClick={() => navigate('/')}>
+            Log out <HiArrowRight />
+          </Button>
+        </Session>
+      </Content>
     </Container>
   );
 };

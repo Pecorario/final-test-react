@@ -28,6 +28,7 @@ interface InitialStateProps {
   counter: number;
   games: Array<GamesProps>;
   savedGames: Array<GamesProps>;
+  savedSuccessfully: boolean;
 }
 
 const initialState: InitialStateProps = {
@@ -46,7 +47,8 @@ const initialState: InitialStateProps = {
   totalPrice: 0,
   counter: 0,
   games: [],
-  savedGames: []
+  savedGames: [],
+  savedSuccessfully: false
 };
 
 const gameSlice = createSlice({
@@ -200,12 +202,16 @@ const gameSlice = createSlice({
         state.savedGames = [...state.savedGames, ...state.games];
         state.games = [];
         state.totalPrice = 0;
+        state.savedSuccessfully = true;
         return alert('Game saved successfully!');
       } else {
         return alert(
           `The cart total value is less than R$ ${state.minCartValue}`
         );
       }
+    },
+    resetSavedSuccessfully(state) {
+      state.savedSuccessfully = false;
     }
   }
 });

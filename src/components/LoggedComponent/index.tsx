@@ -1,18 +1,20 @@
 import { Header } from '@components/Header';
-import { Container } from './styles';
+import { Container, Content } from './styles';
 
 interface LoggedProps {
-  overflow?: boolean;
+  isNewBetPage?: boolean;
 }
 
 export const LoggedComponent: React.FC<LoggedProps> = ({
   children,
-  overflow = false
+  isNewBetPage = false
 }) => {
   return (
     <>
       <Header />
-      <Container overflow={overflow}>{children}</Container>
+      <Container>
+        <Content isNewBetPage={isNewBetPage}>{children}</Content>
+      </Container>
     </>
   );
 };

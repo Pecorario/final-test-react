@@ -62,7 +62,7 @@ export function NewBet() {
     <>
       {userLogged.isLoggedIn ? (
         <>
-          <LoggedComponent>
+          <LoggedComponent isNewBetPage={true}>
             <Container>
               <h2>
                 <strong>NEW BET</strong> FOR{' '}

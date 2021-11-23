@@ -5,15 +5,19 @@ interface StyleCardProps {
 }
 
 export const Container = styled.div`
-  margin-bottom: 32px;
+  margin-bottom: 2rem;
   display: flex;
   align-items: center;
+
+  @media (max-width: 1100px) {
+    margin-bottom: 0.5rem;
+  }
 `;
 
 export const Info = styled.div<StyleCardProps>`
   position: relative;
-  height: 86px;
-  margin-left: 25px;
+  height: 5.375rem;
+  margin-left: 1.56rem;
 
   display: flex;
   flex-direction: column;
@@ -22,7 +26,7 @@ export const Info = styled.div<StyleCardProps>`
   &:before {
     content: '';
     width: 4px;
-    height: 86px;
+    height: 5.375rem;
     background: ${props => props.color};
     border-radius: 100px 0 0 100px;
 
@@ -33,15 +37,15 @@ export const Info = styled.div<StyleCardProps>`
 `;
 
 export const Numbers = styled.p`
-  margin-bottom: 8px;
-  font-size: 15px;
+  margin-bottom: 0.5rem;
+  font-size: 0.94rem;
   font-weight: bold;
   font-style: italic;
   color: #868686;
 `;
 
 export const Name = styled.p<StyleCardProps>`
-  font-size: 16px;
+  font-size: 1rem;
   color: #868686;
   margin-bottom: 0;
 
@@ -55,7 +59,7 @@ export const Name = styled.p<StyleCardProps>`
 
 export const TrashButton = styled.button`
   & svg {
-    font-size: 24px;
+    font-size: 1.5rem;
     color: #888888;
   }
 

@@ -16,10 +16,10 @@ export const Btn = styled.button<StyledButtonProps>`
   margin: ${props => props.marginNumber};
 
   & svg {
-    font-size: 30px;
+    font-size: 1.875rem;
     margin-left: ${props =>
       props.color === 'forward' || props.color === 'registration'
-        ? '15px'
+        ? '0.9rem'
         : ''};
     margin-right: ${props => props.color === 'back' && '1rem'};
   }

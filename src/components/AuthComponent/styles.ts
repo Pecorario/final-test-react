@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  height: calc(100vh - 79.5px);
+  height: calc(100vh - 10rem);
   display: flex;
   justify-content: space-around;
 

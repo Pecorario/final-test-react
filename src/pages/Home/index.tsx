@@ -6,7 +6,7 @@ import { HiArrowRight } from 'react-icons/hi';
 
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 
-import { FilterBar, Button } from './styles';
+import { FilterBar, Button, Games } from './styles';
 import { useEffect, useState } from 'react';
 import { fetchGamesData } from '@store/game-actions';
 import { gameActions } from '@store/game-slice';
@@ -73,7 +73,7 @@ export function Home() {
     <>
       {userLogged.isLoggedIn ? (
         <>
-          <LoggedComponent overflow>
+          <LoggedComponent>
             <div>
               <FilterBar>
                 <h2>RECENT GAMES</h2>
@@ -94,9 +94,11 @@ export function Home() {
                 </div>
               </FilterBar>
 
-              {filteredGames.map((game: GamesProps) => {
-                return <Card game={game} />;
-              })}
+              <Games>
+                {filteredGames.map((game: GamesProps) => {
+                  return <Card game={game} />;
+                })}
+              </Games>
             </div>
 
             <div>

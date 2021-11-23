@@ -31,4 +31,16 @@ export const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
   }
+
+  @media (max-width: 767px) {
+    :root {
+      font-size: 12px;
+    }
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    :root {
+      font-size: 14px;
+    }
+  }
 `;
