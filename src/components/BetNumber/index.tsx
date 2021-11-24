@@ -1,6 +1,8 @@
-import { gameActions } from '@store/game-slice';
 import { useEffect, useState } from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+
+import { gameActions } from '@store/game-slice';
+
 import { Button } from './styles';
 
 interface BetNumberProps {

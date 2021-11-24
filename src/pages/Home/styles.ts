@@ -55,11 +55,20 @@ export const FilterBar = styled.div`
 
 export const Games = styled.div`
   height: 100%;
-  padding-bottom: 3.125rem;
   overflow-y: auto;
   &::-webkit-scrollbar {
     width: 0px;
   }
+
+  @media (max-width: 502.4px) {
+    padding-bottom: 4rem;
+  }
+`;
+
+export const NoGamesSpan = styled.div`
+  display: inline-block;
+  color: #ff0000;
+  margin-top: 2rem;
 `;
 
 export const Button = styled.button`

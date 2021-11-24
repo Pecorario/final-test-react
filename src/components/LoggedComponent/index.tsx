@@ -1,4 +1,5 @@
 import { Header } from '@components/Header';
+
 import { Container, Content } from './styles';
 
 interface LoggedProps {

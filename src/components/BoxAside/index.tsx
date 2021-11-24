@@ -5,11 +5,11 @@ import { Container } from './styles';
 
 interface BoxAsideProps {
   title: string;
+  type: 'back' | 'registration';
   buttonInsideText: string;
   buttonOutsideText: string;
   onInsideClick?: (event: React.FormEvent) => void;
   onOutsideClick?: () => void;
-  type: 'back' | 'registration';
 }
 
 export const BoxAside: React.FC<BoxAsideProps> = ({

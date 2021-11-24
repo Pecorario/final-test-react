@@ -1,7 +1,11 @@
-import { Container, Numbers, Info, Name, TrashButton } from './styles';
-import { IoTrashOutline } from 'react-icons/io5';
 import { useDispatch } from 'react-redux';
+
 import { gameActions } from '@store/game-slice';
+
+import { IoTrashOutline } from 'react-icons/io5';
+
+import { Container, Numbers, Info, Name, TrashButton } from './styles';
+
 interface CardProps {
   game: {
     id: number;

@@ -1,12 +1,14 @@
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+
+import { gameActions } from '@store/game-slice';
+
 import { BetNumber } from '@components/BetNumber';
 import { Cart } from '@components/Cart';
 import { Footer } from '@components/Footer';
 import { GameButton } from '@components/GameButton';
 import { LoggedComponent } from '@components/LoggedComponent';
 import { NotFoundPage } from '@components/NotFoundPage';
-import { gameActions } from '@store/game-slice';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 
 import {
   Container,

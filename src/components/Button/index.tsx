@@ -1,5 +1,6 @@
-import { Btn } from './styles';
 import { HiArrowRight, HiArrowLeft } from 'react-icons/hi';
+
+import { Btn } from './styles';
 
 interface ButtonProps {
   onClick?: (event: React.FormEvent) => void | undefined;

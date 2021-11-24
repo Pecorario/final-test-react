@@ -13,4 +13,7 @@ export const LinkTo = styled(Link)`
   &:hover {
     filter: brightness(0.8);
   }
+  @media (max-width: 600px) {
+    margin-bottom: 0;
+  }
 `;

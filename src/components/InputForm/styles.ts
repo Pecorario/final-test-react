@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+interface InputProps {
+  isTheFirst?: boolean;
+}
 
 export const Container = styled.div`
   position: relative;
@@ -7,12 +10,13 @@ export const Container = styled.div`
   border-bottom: 2px solid #ebebeb;
 `;
 
-export const Input = styled.input`
+export const Input = styled.input<InputProps>`
   height: 100%;
   width: 100%;
   padding: 0 1.875rem;
 
   font-size: 1.0625rem;
+  border-radius: ${props => props.isTheFirst && '14px 14px 0 0'};
 
   &::placeholder {
     font-size: 1.0625rem;

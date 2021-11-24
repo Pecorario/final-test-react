@@ -1,9 +1,11 @@
-import { CardCart } from '@components/CardCart';
-import { gameActions } from '@store/game-slice';
 import { useEffect } from 'react';
-import { HiArrowRight } from 'react-icons/hi';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+
+import { gameActions } from '@store/game-slice';
+
+import { CardCart } from '@components/CardCart';
+import { HiArrowRight } from 'react-icons/hi';
 
 import {
   Container,

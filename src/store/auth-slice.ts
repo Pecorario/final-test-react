@@ -41,16 +41,32 @@ const authSlice = createSlice({
         password: passwordUser
       } = action.payload;
 
-      state.users.push({
-        name: nameUser,
-        email: emailUser,
-        password: passwordUser,
-        isLoggedIn: false
-      });
+      const nameIsNotEmpty = nameUser.trim().length > 0;
+      const emailIsNotEmpty = emailUser.trim().length > 0;
+      const passwordIsNotEmpty = passwordUser.trim().length > 0;
+
+      if (nameIsNotEmpty && emailIsNotEmpty && passwordIsNotEmpty) {
+        state.isMessageInitial = false;
+        state.users.push({
+          name: nameUser,
+          email: emailUser,
+          password: passwordUser,
+          isLoggedIn: false
+        });
+      } else {
+        if (!nameIsNotEmpty) {
+          state.nameMessage = 'Name cannot be empty.';
+        }
+        if (!emailIsNotEmpty) {
+          state.emailMessage = 'Email cannot be empty.';
+        }
+        if (!passwordIsNotEmpty) {
+          state.passwordMessage = 'Password cannot be empty.';
+        }
+      }
     },
     validateInput(state, action) {
       const { type, value } = action.payload;
-      state.isMessageInitial = false;
 
       if (type === 'email') {
         const emailIsValid = value.trim().length > 0 && value.includes('@');
@@ -73,7 +89,7 @@ const authSlice = createSlice({
         } else if (passwordIsValid) {
           state.passwordMessage = '';
         }
-      } else {
+      } else if (type === 'name') {
         const nameIsValid = value.trim().length > 0;
 
         if (!nameIsValid) {
@@ -121,13 +137,37 @@ const authSlice = createSlice({
       );
 
       if (userLogged) {
-        userLogged.isLoggedIn = false;
         state.userLogged = {
           name: '',
           email: '',
           password: '',
           isLoggedIn: false
         };
+      }
+    },
+    resetPassword(state, action) {
+      const email = action.payload;
+      const emailIsNotEmpty = email.trim().length > 0;
+
+      if (emailIsNotEmpty) {
+        const emailExists = state.users.some(user => user.email === email);
+
+        if (!emailExists) {
+          state.emailMessage = 'This email address is not registered';
+        } else {
+          state.emailMessage = '';
+          const userLogged = state.users.find(
+            (user: UserProps) => user.email === email
+          );
+
+          if (userLogged) {
+            state.isMessageInitial = false;
+            userLogged.password = '12345678';
+            alert('Password has been redefined to 12345678');
+          }
+        }
+      } else {
+        state.emailMessage = 'Email cannot be empty.';
       }
     },
     resetMessages(state) {

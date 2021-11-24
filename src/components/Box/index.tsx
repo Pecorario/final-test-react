@@ -1,4 +1,5 @@
 import { Button } from '@components/Button';
+
 import { Container, Content } from './styles';
 
 interface BoxProps {

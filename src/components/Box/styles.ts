@@ -14,16 +14,17 @@ export const Container = styled.form`
   border: 1px solid #dddddd;
   border-radius: 0.875rem;
 
-  & input:first-child {
-    border-radius: 14px 14px 0 0;
-  }
-
   button {
     margin-top: 2.1rem;
     margin-bottom: 2.69rem;
 
     &:hover {
       filter: brightness(0.8);
+    }
+
+    @media (max-width: 600px) {
+      margin-top: 1.1rem;
+      margin-bottom: 1.69rem;
     }
   }
 `;

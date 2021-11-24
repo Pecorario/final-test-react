@@ -1,11 +1,14 @@
+import { useEffect, useState } from 'react';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
+import { authActions } from '@store/auth-slice';
+
 import { AuthComponent } from '@components/AuthComponent';
 import { BoxAside } from '@components/BoxAside';
 import { Footer } from '@components/Footer';
 import { InputForm } from '@components/InputForm';
-import { authActions } from '@store/auth-slice';
-import { useEffect, useState } from 'react';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+
 import { LinkTo } from './styles';
 
 export function Login() {
@@ -24,6 +27,10 @@ export function Login() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    dispatch(authActions.resetMessages());
+  }, [dispatch]);
 
   const emailChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -52,10 +59,6 @@ export function Login() {
   };
 
   useEffect(() => {
-    dispatch(authActions.resetMessages());
-  }, [dispatch]);
-
-  useEffect(() => {
     if (emailMessage === '' && passwordMessage === '' && !isMessageInitial) {
       setEmail('');
       setPassword('');
@@ -81,6 +84,7 @@ export function Login() {
             onChange={emailChangeHandler}
             message={emailMessage}
             value={email}
+            isTheFirst={true}
           />
           <InputForm
             text="Password"

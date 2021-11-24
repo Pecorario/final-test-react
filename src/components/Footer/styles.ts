@@ -6,6 +6,7 @@ export const Container = styled.footer`
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #f7f7f7;
 
   p {
     font-size: 0.9rem;

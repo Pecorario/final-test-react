@@ -6,23 +6,33 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  h2 {
+  & h2 {
     font-size: 4.06rem;
     color: #707070;
     text-align: center;
     font-style: italic;
   }
 
-  h1 {
+  & h1 {
     font-size: 5.2rem;
     color: #707070;
     text-align: center;
     font-style: italic;
   }
+
+  @media (max-width: 600px) {
+    & h2 {
+      font-size: 2.5rem;
+    }
+
+    & h1 {
+      font-size: 3.5rem;
+    }
+  }
 `;
 
 export const Separator = styled.span`
-  background: #B5C401;
+  background: #b5c401;
   height: 2.4rem;
   width: 9rem;
   border-radius: 100px;
@@ -34,7 +44,15 @@ export const Separator = styled.span`
   justify-content: center;
 
   font-size: 1.375rem;
-  color: #FFF;
+  color: #fff;
   font-weight: bold;
   font-style: italic;
+
+  @media (max-width: 600px) {
+    margin: 1rem 0 0.5rem 0;
+
+    height: 1.5rem;
+    width: 5rem;
+    font-size: 1rem;
+  }
 `;

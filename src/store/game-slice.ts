@@ -135,8 +135,13 @@ const gameSlice = createSlice({
       state.selectedNumbers = [];
     },
     completeGame(state) {
-      const missingNumbers =
+      let missingNumbers =
         state.active.maxNumber - state.selectedNumbers.length;
+
+      if (missingNumbers === 0) {
+        missingNumbers = state.active.maxNumber;
+        state.selectedNumbers = [];
+      }
 
       for (let i = 0; i < missingNumbers; i++) {
         let randomNumber = Math.round(
@@ -198,7 +203,7 @@ const gameSlice = createSlice({
       }
     },
     saveGame(state) {
-      if (state.totalPrice > state.minCartValue) {
+      if (state.totalPrice >= state.minCartValue) {
         state.savedGames = [...state.savedGames, ...state.games];
         state.games = [];
         state.totalPrice = 0;
@@ -206,7 +211,7 @@ const gameSlice = createSlice({
         return alert('Game saved successfully!');
       } else {
         return alert(
-          `The cart total value is less than R$ ${state.minCartValue}`
+          `The cart total value is less than R$ ${state.minCartValue},00`
         );
       }
     },

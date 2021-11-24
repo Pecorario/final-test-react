@@ -1,17 +1,18 @@
-import { Card } from '@components/Card';
-import { GameButton } from '@components/GameButton';
-import { LoggedComponent } from '@components/LoggedComponent';
-import { useNavigate } from 'react-router-dom';
-import { HiArrowRight } from 'react-icons/hi';
-
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-
-import { FilterBar, Button, Games } from './styles';
 import { useEffect, useState } from 'react';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 import { fetchGamesData } from '@store/game-actions';
 import { gameActions } from '@store/game-slice';
+
+import { Card } from '@components/Card';
+import { GameButton } from '@components/GameButton';
 import { NotFoundPage } from '@components/NotFoundPage';
 import { Footer } from '@components/Footer';
+import { LoggedComponent } from '@components/LoggedComponent';
+import { HiArrowRight } from 'react-icons/hi';
+
+import { FilterBar, Button, Games, NoGamesSpan } from './styles';
 
 interface TypesProps {
   name: string;
@@ -95,9 +96,13 @@ export function Home() {
               </FilterBar>
 
               <Games>
-                {filteredGames.map((game: GamesProps) => {
-                  return <Card game={game} />;
-                })}
+                {filteredGames.length > 0 ? (
+                  filteredGames.map((game: GamesProps) => {
+                    return <Card key={game.id} game={game} />;
+                  })
+                ) : (
+                  <NoGamesSpan>No recent games found</NoGamesSpan>
+                )}
               </Games>
             </div>
 

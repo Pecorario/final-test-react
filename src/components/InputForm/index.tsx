@@ -6,6 +6,7 @@ interface InputProps {
   value?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   message?: string;
+  isTheFirst?: boolean;
 }
 
 export const InputForm: React.FC<InputProps> = ({
@@ -13,11 +14,18 @@ export const InputForm: React.FC<InputProps> = ({
   type,
   value,
   onChange,
-  message
+  message,
+  isTheFirst
 }) => {
   return (
     <Container>
-      <Input placeholder={text} type={type} value={value} onChange={onChange} />
+      <Input
+        placeholder={text}
+        type={type}
+        value={value}
+        onChange={onChange}
+        isTheFirst={isTheFirst}
+      />
       {message && <Message>{message}</Message>}
     </Container>
   );

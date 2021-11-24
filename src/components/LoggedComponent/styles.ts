@@ -23,10 +23,12 @@ export const Content = styled.header<LoggedProps>`
   display: flex;
   justify-content: space-between;
 
+  padding-bottom: ${props => !props.isNewBetPage && '3rem'};
+
   @media (max-width: 502.4px) {
     flex-direction: ${props => props.isNewBetPage && 'column'};
     width: 100%;
-    padding: 2rem 2rem 0 2rem;
+    padding: 2rem 2rem ${props => !props.isNewBetPage && '4rem'} 2rem;
   }
 
   @media screen and (min-width: 502.5px) and (max-width: 1100px) {
@@ -36,6 +38,6 @@ export const Content = styled.header<LoggedProps>`
   }
 
   @media (max-width: 1100px) {
-    padding-bottom: ${props => (props.isNewBetPage ? '12rem' : '8rem')};
+    padding-bottom: ${props => (props.isNewBetPage ? '12rem' : '4rem')};
   }
 `;

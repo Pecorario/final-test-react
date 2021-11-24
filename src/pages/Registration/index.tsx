@@ -1,11 +1,13 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+
+import { authActions } from '@store/auth-slice';
+
 import { AuthComponent } from '@components/AuthComponent';
 import { BoxAside } from '@components/BoxAside';
 import { Footer } from '@components/Footer';
 import { InputForm } from '@components/InputForm';
-import { authActions } from '@store/auth-slice';
-import { useEffect, useState } from 'react';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 export function Registration() {
   const navigate = useNavigate();
@@ -27,6 +29,10 @@ export function Registration() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    dispatch(authActions.resetMessages());
+  }, [dispatch]);
 
   const nameChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -51,34 +57,32 @@ export function Registration() {
     );
   };
 
+  const readyToSubmit =
+    nameMessage === '' &&
+    emailMessage === '' &&
+    passwordMessage === '' &&
+    !isMessageInitial;
+
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
+    dispatch(
+      authActions.registerAccount({
+        name: name,
+        email: email,
+        password: password
+      })
+    );
+  };
 
-    if (
-      nameMessage === '' &&
-      emailMessage === '' &&
-      passwordMessage === '' &&
-      !isMessageInitial
-    ) {
-      dispatch(
-        authActions.registerAccount({
-          name: name,
-          email: email,
-          password: password
-        })
-      );
-      console.log('passou na validação');
+  useEffect(() => {
+    if (readyToSubmit) {
       setName('');
       setEmail('');
       setPassword('');
       dispatch(authActions.defineInitialStateOfMessages());
       navigate('/');
     }
-  };
-
-  useEffect(() => {
-    dispatch(authActions.resetMessages());
-  }, [dispatch]);
+  }, [dispatch, navigate, readyToSubmit]);
 
   return (
     <>
@@ -97,6 +101,7 @@ export function Registration() {
             value={name}
             onChange={nameChangeHandler}
             message={nameMessage}
+            isTheFirst={true}
           />
           <InputForm
             text="Email"

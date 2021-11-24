@@ -1,4 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+import { RootStateOrAny, useSelector } from 'react-redux';
+
 import { HiArrowRight } from 'react-icons/hi';
 
 import {
@@ -10,7 +12,6 @@ import {
   Button,
   Content
 } from './styles';
-import { RootStateOrAny, useSelector } from 'react-redux';
 
 export const Header: React.FC = () => {
   const { name } = useSelector(
