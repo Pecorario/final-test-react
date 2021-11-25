@@ -1,13 +1,17 @@
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { gameActions } from '@store/game-slice';
 
-import { BetNumber } from '@components/BetNumber';
-import { Cart } from '@components/Cart';
-import { Footer } from '@components/Footer';
-import { GameButton } from '@components/GameButton';
-import { LoggedComponent } from '@components/LoggedComponent';
-import { NotFoundPage } from '@components/NotFoundPage';
+import {
+  BetNumber,
+  Cart,
+  Footer,
+  GameButton,
+  LoggedComponent,
+  NotFoundPage
+} from '@components/index';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 
 import {
@@ -117,6 +121,15 @@ export function NewBet() {
             <Cart />
           </LoggedComponent>
           <Footer />
+          <ToastContainer
+            position="top-right"
+            autoClose={4000}
+            hideProgressBar={true}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            theme="colored"
+          />
         </>
       ) : (
         <NotFoundPage />

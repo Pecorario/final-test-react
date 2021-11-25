@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 
 import { gameActions } from '@store/game-slice';
+import { getMoneyInReal } from '../../shared/helpers/utils';
 
 import { IoTrashOutline } from 'react-icons/io5';
 
@@ -19,6 +20,7 @@ interface CardProps {
 
 export const CardCart: React.FC<CardProps> = ({ game }) => {
   const dispatch = useDispatch();
+  const formatPrice = getMoneyInReal(game.price);
 
   const deleteItem = () => {
     dispatch(gameActions.removeItemOnCart(game.id));
@@ -32,7 +34,7 @@ export const CardCart: React.FC<CardProps> = ({ game }) => {
       <Info color={game.color}>
         <Numbers>{game.numbers.toString().replace(/,/g, ', ')}</Numbers>
         <Name color={game.color}>
-          <span>{game.name}</span> R$ {game.price.toFixed(2)}
+          <span>{game.name}</span> {formatPrice}
         </Name>
       </Info>
     </Container>

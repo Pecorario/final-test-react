@@ -1,4 +1,4 @@
-import { TitleAside } from '@components/TitleAside';
+import { TitleAside } from '@components/index';
 
 import { Container } from './styles';
 

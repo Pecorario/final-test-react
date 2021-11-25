@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 
 import { gameActions } from '@store/game-slice';
+import { getMoneyInReal } from '../../shared/helpers/utils';
 
-import { CardCart } from '@components/CardCart';
+import { CardCart } from '@components/index';
 import { HiArrowRight } from 'react-icons/hi';
 
 import {
@@ -37,6 +38,8 @@ export const Cart: React.FC = () => {
     (state: RootStateOrAny) => state.game.savedSuccessfully
   );
 
+  const formatPrice = getMoneyInReal(totalPrice);
+
   function saveGame() {
     dispatch(gameActions.saveGame());
   }
@@ -47,6 +50,7 @@ export const Cart: React.FC = () => {
       navigate('/home');
     }
   }, [navigate, savedSuccessfully, dispatch]);
+
   return (
     <Container>
       <CartResponsiveContainer>
@@ -63,13 +67,7 @@ export const Cart: React.FC = () => {
         </Items>
 
         <TotalPrice>
-          <strong>CART</strong> TOTAL:{' '}
-          <span>
-            {totalPrice.toLocaleString('pt-BR', {
-              style: 'currency',
-              currency: 'BRL'
-            })}
-          </span>
+          <strong>CART</strong> TOTAL: <span>{formatPrice}</span>
         </TotalPrice>
       </CartResponsiveContainer>
       <SaveContent>

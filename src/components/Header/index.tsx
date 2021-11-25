@@ -9,7 +9,8 @@ import {
   ContentTitle,
   LinkTo,
   Title,
-  Button,
+  ProfileButton,
+  LogoutButton,
   Content
 } from './styles';
 
@@ -32,10 +33,12 @@ export const Header: React.FC = () => {
           {path === '/new-bet' && <LinkTo to="/home">Home</LinkTo>}
         </ContentTitle>
         <Session>
-          <span>{firstName}</span>
-          <Button onClick={() => navigate('/')}>
+          <ProfileButton onClick={() => navigate('/profile')}>
+            {firstName}
+          </ProfileButton>
+          <LogoutButton onClick={() => navigate('/')}>
             Log out <HiArrowRight />
-          </Button>
+          </LogoutButton>
         </Session>
       </Content>
     </Container>

@@ -97,46 +97,58 @@ const authSlice = createSlice({
         } else if (nameIsValid) {
           state.nameMessage = '';
         }
+      } else if (type === 'emailRedefine') {
+        const emailIsValid = value.trim().length > 0 && value.includes('@');
+
+        const emailExists =
+          state.users.some(user => user.email === value) &&
+          !state.userLogged.email;
+
+        if (emailExists) {
+          state.emailMessage = 'This email is already in use.';
+        } else if (!emailIsValid) {
+          state.emailMessage = 'Invalid email.';
+        } else if (!emailExists && emailIsValid) {
+          state.emailMessage = '';
+        }
       }
     },
     onLogin(state, action) {
       const { email, password } = action.payload;
 
-      if (state.users.length > 0) {
-        state.users.map((user: UserProps) => {
-          if (user.email === email) {
-            if (user.password === password) {
-              state.passwordMessage = '';
-              state.emailMessage = '';
-              state.isMessageInitial = false;
+      const userToLogin = state.users.find(
+        (user: UserProps) => user.email === email
+      );
 
-              state.userLogged = {
-                name: user.name,
-                email: user.email,
-                password: user.password,
-                isLoggedIn: true
-              };
-              return (user.isLoggedIn = true);
-            } else {
-              return (state.passwordMessage = 'Incorrect password.');
-            }
-          } else {
-            return (state.emailMessage = 'Incorrect email.');
-          }
-        });
+      if (userToLogin) {
+        state.emailMessage = '';
+        if (userToLogin.password === password) {
+          state.passwordMessage = '';
+          state.isMessageInitial = false;
+          userToLogin.isLoggedIn = true;
+
+          state.userLogged = {
+            name: userToLogin.name,
+            email: userToLogin.email,
+            password: userToLogin.password,
+            isLoggedIn: true
+          };
+        } else {
+          state.passwordMessage = 'Incorrect password.';
+        }
       } else {
-        state.emailMessage = 'Incorrect email.';
-        state.passwordMessage = '';
+        state.emailMessage = 'Incorrect email';
       }
     },
     onLogout(state, action) {
-      const email = action.payload.email;
+      const email = action.payload;
 
       const userLogged = state.users.find(
         (user: UserProps) => user.email === email
       );
 
       if (userLogged) {
+        userLogged.isLoggedIn = false;
         state.userLogged = {
           name: '',
           email: '',
@@ -168,6 +180,47 @@ const authSlice = createSlice({
         }
       } else {
         state.emailMessage = 'Email cannot be empty.';
+      }
+    },
+    redefineRegister(state, action) {
+      const {
+        name: nameUser,
+        email: emailUser,
+        password: passwordUser
+      } = action.payload;
+
+      const nameIsNotEmpty = nameUser.trim().length > 0;
+      const emailIsNotEmpty = emailUser.trim().length > 0;
+      const passwordIsNotEmpty = passwordUser.trim().length > 0;
+
+      if (nameIsNotEmpty && emailIsNotEmpty && passwordIsNotEmpty) {
+        const userLogged = state.users.find(
+          (user: UserProps) => user.email === state.userLogged.email
+        );
+
+        if (userLogged) {
+          state.isMessageInitial = false;
+          userLogged.name = nameUser;
+          userLogged.email = emailUser;
+          userLogged.password = passwordUser;
+
+          state.userLogged = {
+            name: nameUser,
+            email: emailUser,
+            password: passwordUser,
+            isLoggedIn: true
+          };
+        }
+      } else {
+        if (!nameIsNotEmpty) {
+          state.nameMessage = 'Name cannot be empty.';
+        }
+        if (!emailIsNotEmpty) {
+          state.emailMessage = 'Email cannot be empty.';
+        }
+        if (!passwordIsNotEmpty) {
+          state.passwordMessage = 'Password cannot be empty.';
+        }
       }
     },
     resetMessages(state) {

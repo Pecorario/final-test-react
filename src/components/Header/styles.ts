@@ -73,16 +73,20 @@ export const LinkTo = styled(Link)`
 export const Session = styled.div`
   display: flex;
   align-items: center;
+`;
 
-  & span {
-    color: #707070;
-    font-size: 1.25rem;
-    font-weight: bold;
-    font-style: italic;
+export const ProfileButton = styled.button`
+  color: #707070;
+  font-size: 1.25rem;
+  font-weight: bold;
+  font-style: italic;
+
+  &:hover {
+    filter: brightness(0.8);
   }
 `;
 
-export const Button = styled.button`
+export const LogoutButton = styled.button`
   font-size: 1.25rem;
   font-weight: bold;
   font-style: italic;

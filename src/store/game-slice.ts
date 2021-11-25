@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 interface GameProps {
   name: string;
@@ -28,6 +29,7 @@ interface InitialStateProps {
   counter: number;
   games: Array<GamesProps>;
   savedGames: Array<GamesProps>;
+  filteredGames: Array<GamesProps>;
   savedSuccessfully: boolean;
 }
 
@@ -48,6 +50,7 @@ const initialState: InitialStateProps = {
   counter: 0,
   games: [],
   savedGames: [],
+  filteredGames: [],
   savedSuccessfully: false
 };
 
@@ -78,6 +81,38 @@ const gameSlice = createSlice({
           return (game.selected = false);
         }
       });
+    },
+    filterGame(state, action) {
+      const name = action.payload;
+      state.filteredGames = [];
+
+      const selectedGame = state.types.find(
+        (game: GameProps) => game.name === name
+      );
+
+      if (selectedGame) {
+        selectedGame.selected = !selectedGame.selected;
+      }
+      const isAtLeastOneGameSelected = state.types.some(
+        (type: GameProps) => type.selected === true
+      );
+
+      if (isAtLeastOneGameSelected) {
+        state.types.map((type: GameProps) => {
+          if (type.selected) {
+            const filteredByName = state.savedGames.filter(
+              (game: GamesProps) => {
+                return game.name === type.name;
+              }
+            );
+
+            return state.filteredGames.push(...filteredByName);
+          }
+          return state.filteredGames;
+        });
+      } else {
+        state.filteredGames = [];
+      }
     },
     resetGameDefault(state) {
       state.selectedNumbers = [];
@@ -126,9 +161,10 @@ const gameSlice = createSlice({
         auxNumbers = [...state.selectedNumbers, newNumber];
         state.selectedNumbers = auxNumbers;
       } else {
-        alert(
+        toast.warn(
           'Você já escolheu a quantidade máxima de números. Limpe o jogo ou adicione ao carrinho.'
         );
+        return;
       }
     },
     clearGame(state) {
@@ -161,22 +197,34 @@ const gameSlice = createSlice({
       const missingNumbers =
         state.active.maxNumber - state.selectedNumbers.length;
 
+      state.selectedNumbers.sort((a, b) => a - b);
+
       const isThisGameAlreadyFullOnArray = () => {
         return state.selectedNumbers.length === state.active.maxNumber;
       };
 
+      const isThisGameAlreadyPicked = (arr: number[]) => {
+        return state.games.some(
+          game => game.numbers.toString() === arr.toString()
+        );
+      };
+
       if (!isThisGameAlreadyFullOnArray()) {
         if (missingNumbers === 1) {
-          return alert(`${missingNumbers} number missing!`);
+          toast.warn(`${missingNumbers} number missing!`);
+          return;
         }
-        return alert(`${missingNumbers} numbers missing!`);
+        toast.warn(`${missingNumbers} numbers missing!`);
+        return;
+      } else if (isThisGameAlreadyPicked(state.selectedNumbers)) {
+        state.selectedNumbers = [];
+        toast.warn('This game has already been picked by you');
+        return;
       }
 
       const day = new Date().toLocaleString('pt-BR', { day: '2-digit' });
       const month = new Date().toLocaleString('pt-BR', { month: '2-digit' });
       const year = new Date().getFullYear();
-
-      state.selectedNumbers.sort((a, b) => a - b);
 
       const game = {
         id: state.counter,
@@ -208,11 +256,13 @@ const gameSlice = createSlice({
         state.games = [];
         state.totalPrice = 0;
         state.savedSuccessfully = true;
-        return alert('Game saved successfully!');
+        toast.warn('Game saved successfully!');
+        return;
       } else {
-        return alert(
+        toast.warn(
           `The cart total value is less than R$ ${state.minCartValue},00`
         );
+        return;
       }
     },
     resetSavedSuccessfully(state) {

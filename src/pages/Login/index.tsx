@@ -4,10 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { authActions } from '@store/auth-slice';
 
-import { AuthComponent } from '@components/AuthComponent';
-import { BoxAside } from '@components/BoxAside';
-import { Footer } from '@components/Footer';
-import { InputForm } from '@components/InputForm';
+import { AuthComponent, BoxAside, Footer, InputForm } from '@components/index';
 
 import { LinkTo } from './styles';
 

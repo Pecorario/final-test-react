@@ -4,10 +4,7 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 
 import { authActions } from '@store/auth-slice';
 
-import { AuthComponent } from '@components/AuthComponent';
-import { BoxAside } from '@components/BoxAside';
-import { Footer } from '@components/Footer';
-import { InputForm } from '@components/InputForm';
+import { AuthComponent, BoxAside, Footer, InputForm } from '@components/index';
 
 export function Registration() {
   const navigate = useNavigate();

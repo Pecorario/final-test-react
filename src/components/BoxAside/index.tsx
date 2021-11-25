@@ -1,5 +1,4 @@
-import { Box } from '@components/Box';
-import { Button } from '@components/Button';
+import { Box, Button } from '@components/index';
 
 import { Container } from './styles';
 

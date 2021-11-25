@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { fetchGamesData } from '@store/game-actions';
 import { gameActions } from '@store/game-slice';
 
-import { Card } from '@components/Card';
-import { GameButton } from '@components/GameButton';
-import { NotFoundPage } from '@components/NotFoundPage';
-import { Footer } from '@components/Footer';
-import { LoggedComponent } from '@components/LoggedComponent';
+import {
+  Card,
+  GameButton,
+  NotFoundPage,
+  Footer,
+  LoggedComponent
+} from '@components/index';
 import { HiArrowRight } from 'react-icons/hi';
 
 import { FilterBar, Button, Games, NoGamesSpan } from './styles';
@@ -39,11 +41,13 @@ export function Home() {
   const savedGames = useSelector(
     (state: RootStateOrAny) => state.game.savedGames
   );
+  const filteredGames = useSelector(
+    (state: RootStateOrAny) => state.game.filteredGames
+  );
   const userLogged = useSelector(
     (state: RootStateOrAny) => state.auth.userLogged
   );
 
-  const [filteredGames, setFilteredGames] = useState(savedGames);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -51,18 +55,7 @@ export function Home() {
   }, [dispatch]);
 
   function filterGames(name: string, selected: boolean) {
-    if (selected) {
-      dispatch(gameActions.resetTypes());
-      setFilteredGames(savedGames);
-    } else {
-      dispatch(gameActions.selectGame(name));
-
-      const filteredByName = savedGames.filter((game: GamesProps) => {
-        return game.name === name;
-      });
-
-      setFilteredGames(filteredByName);
-    }
+    dispatch(gameActions.filterGame(name));
   }
 
   function navigateToNewBetPage() {
@@ -98,6 +91,10 @@ export function Home() {
               <Games>
                 {filteredGames.length > 0 ? (
                   filteredGames.map((game: GamesProps) => {
+                    return <Card key={game.id} game={game} />;
+                  })
+                ) : savedGames.length > 0 ? (
+                  savedGames.map((game: GamesProps) => {
                     return <Card key={game.id} game={game} />;
                   })
                 ) : (

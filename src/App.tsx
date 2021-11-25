@@ -1,11 +1,16 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Login } from '@pages/Login';
-import { ResetPassword } from '@pages/ResetPassword';
-import { Registration } from '@pages/Registration';
-import { Home } from '@pages/Home';
+
+import {
+  Login,
+  ResetPassword,
+  Registration,
+  Home,
+  NewBet,
+  Profile
+} from '@pages/index';
+import { NotFoundPage } from '@components/index';
+
 import { GlobalStyle } from './styles/global';
-import { NewBet } from '@pages/NewBet';
-import { NotFoundPage } from '@components/NotFoundPage';
 
 function App() {
   return (
@@ -17,6 +22,7 @@ function App() {
           <Route path="/registration" element={<Registration />} />
           <Route path="/home" element={<Home />} />
           <Route path="/new-bet" element={<NewBet />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>

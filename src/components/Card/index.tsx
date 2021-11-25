@@ -1,3 +1,5 @@
+import { getMoneyInReal } from '../../shared/helpers/utils';
+
 import { Container, Numbers, Info, Name } from './styles';
 
 interface CardProps {
@@ -11,11 +13,12 @@ interface CardProps {
 }
 
 export const Card: React.FC<CardProps> = ({ game }) => {
+  const formatPrice = getMoneyInReal(game.price);
   return (
     <Container color={game.color}>
       <Numbers>{game.numbers.toString().replace(/,/g, ', ')}</Numbers>
       <Info>
-        {game.date} - (R$ {game.price.toFixed(2)})
+        {game.date} - ({formatPrice})
       </Info>
       <Name color={game.color}>{game.name}</Name>
     </Container>
