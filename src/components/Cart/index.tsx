@@ -17,7 +17,6 @@ import {
   EmptyCart,
   CartResponsiveContainer
 } from './styles';
-
 interface GamesProps {
   id: number;
   name: string;
@@ -46,7 +45,6 @@ export const Cart: React.FC = () => {
 
   useEffect(() => {
     if (savedSuccessfully) {
-      dispatch(gameActions.resetSavedSuccessfully());
       navigate('/home');
     }
   }, [navigate, savedSuccessfully, dispatch]);
@@ -59,10 +57,10 @@ export const Cart: React.FC = () => {
         <Items>
           {games.length > 0 ? (
             games.map((game: GamesProps) => {
-              return <CardCart key={game.id} game={game} />;
+              return <CardCart key={game.id} game={game} dataCy="items-cart" />;
             })
           ) : (
-            <EmptyCart>Empty cart! :(</EmptyCart>
+            <EmptyCart data-cy="span-empty-cart">Empty cart! :(</EmptyCart>
           )}
         </Items>
 
@@ -71,7 +69,7 @@ export const Cart: React.FC = () => {
         </TotalPrice>
       </CartResponsiveContainer>
       <SaveContent>
-        <SaveButton onClick={saveGame}>
+        <SaveButton onClick={saveGame} data-cy="btn-save">
           Save <HiArrowRight />
         </SaveButton>
       </SaveContent>

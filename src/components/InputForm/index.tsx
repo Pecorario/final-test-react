@@ -7,6 +7,7 @@ interface InputProps {
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   message?: string;
   isTheFirst?: boolean;
+  dataCy?: string;
 }
 
 export const InputForm: React.FC<InputProps> = ({
@@ -15,7 +16,8 @@ export const InputForm: React.FC<InputProps> = ({
   value,
   onChange,
   message,
-  isTheFirst
+  isTheFirst,
+  dataCy
 }) => {
   return (
     <Container>
@@ -25,8 +27,9 @@ export const InputForm: React.FC<InputProps> = ({
         value={value}
         onChange={onChange}
         isTheFirst={isTheFirst}
+        data-cy={dataCy}
       />
-      {message && <Message>{message}</Message>}
+      {message && <Message data-cy="invalid-data">{message}</Message>}
     </Container>
   );
 };

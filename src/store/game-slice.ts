@@ -256,8 +256,6 @@ const gameSlice = createSlice({
         state.games = [];
         state.totalPrice = 0;
         state.savedSuccessfully = true;
-        toast.warn('Game saved successfully!');
-        return;
       } else {
         toast.warn(
           `The cart total value is less than R$ ${state.minCartValue},00`

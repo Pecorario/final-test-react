@@ -15,6 +15,7 @@ import {
 import { HiArrowRight } from 'react-icons/hi';
 
 import { FilterBar, Button, Games, NoGamesSpan } from './styles';
+import { toast, ToastContainer } from 'react-toastify';
 
 interface TypesProps {
   name: string;
@@ -47,12 +48,20 @@ export function Home() {
   const userLogged = useSelector(
     (state: RootStateOrAny) => state.auth.userLogged
   );
+  const savedSuccessfully = useSelector(
+    (state: RootStateOrAny) => state.game.savedSuccessfully
+  );
 
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchGamesData());
-  }, [dispatch]);
+
+    if (savedSuccessfully) {
+      toast.success('Game saved successfully.');
+      dispatch(gameActions.resetSavedSuccessfully());
+    }
+  }, [dispatch, savedSuccessfully]);
 
   function filterGames(name: string, selected: boolean) {
     dispatch(gameActions.filterGame(name));
@@ -104,12 +113,21 @@ export function Home() {
             </div>
 
             <div>
-              <Button onClick={navigateToNewBetPage}>
+              <Button onClick={navigateToNewBetPage} data-cy="btn-new-bet">
                 New Bet <HiArrowRight />
               </Button>
             </div>
           </LoggedComponent>
           <Footer />
+          <ToastContainer
+            position="top-right"
+            autoClose={4000}
+            hideProgressBar={true}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            theme="colored"
+          />
         </>
       ) : (
         <NotFoundPage />

@@ -30,7 +30,7 @@ export const Header: React.FC = () => {
       <Content>
         <ContentTitle>
           <Title>TGL</Title>
-          {path === '/new-bet' && <LinkTo to="/home">Home</LinkTo>}
+          {path !== '/home' && <LinkTo to="/home">Home</LinkTo>}
         </ContentTitle>
         <Session>
           <ProfileButton onClick={() => navigate('/profile')}>

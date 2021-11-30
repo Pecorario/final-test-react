@@ -1,5 +1,5 @@
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { gameActions } from '@store/game-slice';
@@ -85,6 +85,7 @@ export function NewBet() {
                       text={game.name}
                       onClick={() => selectGame(game.name)}
                       selected={game.selected}
+                      dataCy={game.name}
                     />
                   );
                 })}
@@ -105,12 +106,17 @@ export function NewBet() {
 
               <ContentButtons>
                 <div>
-                  <BetButton onClick={completeGame}>Complete game</BetButton>
+                  <BetButton onClick={completeGame} data-cy="btn-complete-game">
+                    Complete game
+                  </BetButton>
                   <BetButton onClick={clearGame}>Clear game</BetButton>
                 </div>
 
                 <div>
-                  <AddButton onClick={addGameToCart}>
+                  <AddButton
+                    onClick={addGameToCart}
+                    data-cy="btn-add-game-to-cart"
+                  >
                     <AiOutlineShoppingCart />
                     Add to cart
                   </AddButton>

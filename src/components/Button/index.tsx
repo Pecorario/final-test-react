@@ -8,6 +8,7 @@ interface ButtonProps {
   text: string;
   marginNumber?: string;
   submit?: boolean;
+  dataCy?: string;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -15,7 +16,8 @@ export const Button: React.FC<ButtonProps> = ({
   type,
   text,
   marginNumber,
-  submit = false
+  submit = false,
+  dataCy
 }) => {
   return (
     <Btn
@@ -23,6 +25,7 @@ export const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       color={type}
       marginNumber={marginNumber}
+      data-cy={dataCy}
     >
       {type === 'back' && <HiArrowLeft />}
       {text}

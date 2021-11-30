@@ -91,6 +91,7 @@ export function Registration() {
           type="back"
           onInsideClick={submitHandler}
           onOutsideClick={() => navigate(-1)}
+          dataCyInside="btn-register"
         >
           <InputForm
             text="Name"
@@ -99,6 +100,7 @@ export function Registration() {
             onChange={nameChangeHandler}
             message={nameMessage}
             isTheFirst={true}
+            dataCy="input-name"
           />
           <InputForm
             text="Email"
@@ -106,6 +108,7 @@ export function Registration() {
             value={email}
             onChange={emailChangeHandler}
             message={emailMessage}
+            dataCy="input-email"
           />
           <InputForm
             text="Password"
@@ -113,6 +116,7 @@ export function Registration() {
             value={password}
             onChange={passwordChangeHandler}
             message={passwordMessage}
+            dataCy="input-password"
           />
         </BoxAside>
       </AuthComponent>

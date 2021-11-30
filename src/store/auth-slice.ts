@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 interface UserProps {
   name: string;
@@ -53,6 +54,7 @@ const authSlice = createSlice({
           password: passwordUser,
           isLoggedIn: false
         });
+        toast.success('Account created successfully.');
       } else {
         if (!nameIsNotEmpty) {
           state.nameMessage = 'Name cannot be empty.';

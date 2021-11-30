@@ -7,6 +7,7 @@ import { authActions } from '@store/auth-slice';
 import { AuthComponent, BoxAside, Footer, InputForm } from '@components/index';
 
 import { LinkTo } from './styles';
+import { ToastContainer } from 'react-toastify';
 
 export function Login() {
   const navigate = useNavigate();
@@ -74,6 +75,8 @@ export function Login() {
           type="registration"
           onInsideClick={submitHandler}
           onOutsideClick={() => navigate('/registration')}
+          dataCyInside="btn-login"
+          dataCyOutside="btn-signup"
         >
           <InputForm
             text="Email"
@@ -82,6 +85,7 @@ export function Login() {
             message={emailMessage}
             value={email}
             isTheFirst={true}
+            dataCy="input-email"
           />
           <InputForm
             text="Password"
@@ -89,11 +93,21 @@ export function Login() {
             onChange={passwordChangeHandler}
             message={passwordMessage}
             value={password}
+            dataCy="input-password"
           />
           <LinkTo to="/reset-password">I forgot my password</LinkTo>
         </BoxAside>
       </AuthComponent>
       <Footer />
+      <ToastContainer
+        position="top-right"
+        autoClose={4000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        theme="colored"
+      />
     </>
   );
 }

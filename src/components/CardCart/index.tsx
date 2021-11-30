@@ -16,9 +16,10 @@ interface CardProps {
     price: number;
     name: string;
   };
+  dataCy?: string;
 }
 
-export const CardCart: React.FC<CardProps> = ({ game }) => {
+export const CardCart: React.FC<CardProps> = ({ game, dataCy }) => {
   const dispatch = useDispatch();
   const formatPrice = getMoneyInReal(game.price);
 
@@ -27,7 +28,7 @@ export const CardCart: React.FC<CardProps> = ({ game }) => {
   };
 
   return (
-    <Container>
+    <Container data-cy={dataCy}>
       <TrashButton onClick={deleteItem}>
         <IoTrashOutline />
       </TrashButton>
